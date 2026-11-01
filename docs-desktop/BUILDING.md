@@ -148,7 +148,7 @@ release (PowerShell: `Get-FileHash <file> -Algorithm SHA256`; macOS and Linux: `
 
 ## Notes for maintainers
 
-- The placeholder repository URL `https://github.com/st1ne/Inkleaf` appears in `electron/app-info.js`,
+- The placeholder repository URL `https://github.com/cod1nz/Inkleaf` appears in `electron/app-info.js`,
   `src/desktop/app-info.ts`, the LibreOffice add-on manifest (`electron/addons/manifest.js`) and the README. Replace
   all of them together when the real repository exists.
 - The `appId` in `electron-builder.yml` is also a placeholder (`dev.inkleaf.desktop`). Change it before the first

@@ -18,7 +18,7 @@ const assetLock = JSON.parse(
 );
 
 // Keep in sync with src/desktop/app-info.ts
-const SOURCE_URL = 'https://github.com/st1ne/Inkleaf';
+const SOURCE_URL = 'https://github.com/cod1nz/Inkleaf';
 const UPSTREAM_URL = 'https://github.com/alam00000/bentopdf';
 
 const esc = (s) =>

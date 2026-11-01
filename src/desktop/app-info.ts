@@ -4,5 +4,5 @@
  * REPLACE_ME in SOURCE_URL must be replaced with the real repository path when the repo is public.
  */
 export const APP_NAME = 'Inkleaf';
-export const SOURCE_URL = 'https://github.com/st1ne/Inkleaf';
+export const SOURCE_URL = 'https://github.com/cod1nz/Inkleaf';
 export const UPSTREAM_URL = 'https://github.com/alam00000/bentopdf';

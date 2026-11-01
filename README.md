@@ -60,7 +60,7 @@ Inkleaf does not send your files or usage data anywhere.
 
 ## Install
 
-1. Go to the releases page: **https://github.com/st1ne/Inkleaf/releases** (placeholder until the
+1. Go to the releases page: **https://github.com/cod1nz/Inkleaf/releases** (placeholder until the
    repository is public).
 2. Download the file for your system:
    - Windows: `Inkleaf-Setup-<version>-x64.exe` (installer) or the portable build, if one is attached.
@@ -164,4 +164,4 @@ software under the GNU AGPL-3.0; source code available at the repository linked 
 The third-party notices list 413 JavaScript packages and 14 bundled components (WebAssembly and native), with their
 licences. The original BentoPDF README is in [`UPSTREAM-README.md`](UPSTREAM-README.md).
 
-Repository: `https://github.com/st1ne/Inkleaf` (placeholder).
+Repository: `https://github.com/cod1nz/Inkleaf` (placeholder).

@@ -11,7 +11,7 @@ const MANIFEST = Object.freeze({
     name: 'libreoffice',
     title: 'Office converter',
     version: VERSION,
-    url: `https://github.com/st1ne/Inkleaf/releases/download/addons-v1/libreoffice-wasm-${VERSION}.zip`,
+    url: `https://github.com/cod1nz/Inkleaf/releases/download/addons-v1/libreoffice-wasm-${VERSION}.zip`,
     sha256: '0'.repeat(64),
     sizeBytes: 75 * 1024 * 1024,
     requiredFiles: Object.freeze(['soffice.js']),
