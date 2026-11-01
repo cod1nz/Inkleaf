@@ -550,7 +550,10 @@ test('manager: install() downloads (injected), verifies hash then extracts', asy
 test('manager: placeholder hash is refused (no download attempted)', async () => {
   const d = tmpdir();
   try {
-    const manifest = getManifest('libreoffice', { isPackaged: true });
+    const manifest = {
+      ...getManifest('libreoffice', { isPackaged: true }),
+      sha256: '0'.repeat(64),
+    };
     let calls = 0;
     const mgr = createManager({
       root: path.join(d, 'a'),

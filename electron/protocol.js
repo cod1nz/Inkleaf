@@ -35,10 +35,10 @@ function registerScheme() {
   ]);
 }
 
-function reply(status, body, extra = {}) {
+function reply(status, body, extra = {}, addon = false) {
   return new Response(body, {
     status,
-    headers: { ...securityHeaders(), ...extra },
+    headers: { ...securityHeaders({ addon }), ...extra },
   });
 }
 
@@ -51,14 +51,14 @@ async function regularFile(file, roots) {
   }
 }
 
-async function serve(file, st, req) {
+async function serve(file, st, req, addon = false) {
   const headers = {
     'Content-Type': mimeFor(file),
     'Content-Length': String(st.size),
     'Cache-Control': 'no-cache',
   };
-  if (req.method === 'HEAD') return reply(200, null, headers);
-  return reply(200, Readable.toWeb(fs.createReadStream(file)), headers);
+  if (req.method === 'HEAD') return reply(200, null, headers, addon);
+  return reply(200, Readable.toWeb(fs.createReadStream(file)), headers, addon);
 }
 
 function createHandler() {
@@ -89,7 +89,7 @@ function createHandler() {
       addonRoots = addonRoots?.length ? addonRoots : await realRoots(root);
       const file = resolveInside(root, segments.slice(1));
       const st = file && (await regularFile(file, addonRoots));
-      return st ? serve(file, st, req) : reply(404, 'Not Found');
+      return st ? serve(file, st, req, true) : reply(404, 'Not Found');
     }
 
     const root = distRoot();

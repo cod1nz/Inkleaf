@@ -6,7 +6,7 @@ no accounts and no cloud. A free alternative to paid PDF editors.
 Inkleaf bundles **118 PDF tools** (merge, split, edit, annotate, convert, OCR, compress, repair, sign, protect and
 more) into one app. Your files stay on your computer.
 
-> Status: early desktop release (version 2.8.11). The Windows installer builds locally; macOS builds are produced by
+> Status: early desktop release (version 0.1.0). The Windows installer builds locally; macOS builds are produced by
 > CI and have not been tested on real hardware by the author. See [Known limitations](#known-limitations).
 
 ## Screenshots

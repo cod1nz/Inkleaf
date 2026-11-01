@@ -12,7 +12,7 @@ const {
 } = require('../lib/safepath');
 const { candidatesFor, LOCALES } = require('../lib/routing');
 const { mimeFor } = require('../lib/mime');
-const { securityHeaders, CSP } = require('../lib/headers');
+const { securityHeaders, CSP, ADDON_CSP } = require('../lib/headers');
 const { isTrustedUrl, isHttpUrl } = require('../lib/trust');
 const {
   toLongPath,
@@ -295,4 +295,83 @@ test('privacy headers: no DNS prefetch, no referrer', () => {
   const h = securityHeaders();
   assert.equal(h['X-DNS-Prefetch-Control'], 'off');
   assert.equal(h['Referrer-Policy'], 'no-referrer');
+});
+
+test('csp: unsafe-eval only in the add-on policy', () => {
+  assert.doesNotMatch(CSP, /(?<!wasm-)unsafe-eval/);
+  assert.match(
+    ADDON_CSP,
+    /script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval';/
+  );
+  // identical apart from that one token
+  assert.equal(ADDON_CSP.replace(" 'unsafe-eval'", ''), CSP);
+  assert.equal(securityHeaders()['Content-Security-Policy'], CSP);
+  assert.equal(securityHeaders({})['Content-Security-Policy'], CSP);
+  assert.equal(
+    securityHeaders({ addon: true })['Content-Security-Policy'],
+    ADDON_CSP
+  );
+});
+
+test('protocol handler: add-on CSP only on served /addons/ files', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'inkleaf-proto-'));
+  const dist = path.join(root, 'dist');
+  const ud = path.join(root, 'ud');
+  fs.mkdirSync(dist);
+  fs.mkdirSync(path.join(ud, 'addons', 'libreoffice', '1.0.0'), {
+    recursive: true,
+  });
+  fs.writeFileSync(path.join(dist, 'index.html'), '<p>x</p>');
+  fs.writeFileSync(path.join(dist, '404.html'), '<p>nf</p>');
+  fs.writeFileSync(path.join(dist, 'a.js'), '1');
+  fs.writeFileSync(
+    path.join(ud, 'addons', 'libreoffice', '1.0.0', 'soffice.js'),
+    '1'
+  );
+  const Module = require('node:module');
+  const origLoad = Module._load;
+  let handler;
+  Module._load = function (request, ...rest) {
+    if (request === 'electron')
+      return {
+        protocol: { registerSchemesAsPrivileged() {}, handle() {} },
+        app: { isPackaged: false, getPath: () => ud, getAppPath: () => root },
+      };
+    return origLoad.call(this, request, ...rest);
+  };
+  const prevDist = process.env.INKLEAF_DIST;
+  process.env.INKLEAF_DIST = dist;
+  try {
+    delete require.cache[require.resolve('../protocol')];
+    delete require.cache[require.resolve('../paths')];
+    const { registerHandler } = require('../protocol');
+    registerHandler({ protocol: { handle: (_s, h) => (handler = h) } });
+    const get = async (p, method = 'GET') =>
+      handler(new Request('app://bentopdf' + p, { method }));
+    const csp = async (p, method) =>
+      (await get(p, method)).headers.get('content-security-policy');
+    assert.equal(await csp('/addons/libreoffice/1.0.0/soffice.js'), ADDON_CSP);
+    assert.equal(
+      await csp('/addons/libreoffice/1.0.0/soffice.js', 'HEAD'),
+      ADDON_CSP
+    );
+    for (const p of [
+      '/',
+      '/index.html',
+      '/a.js',
+      '/missing',
+      '/addons/libreoffice/1.0.0/missing.js',
+      '/addons/x',
+      '/addons/libreoffice/1.0.0/p.html',
+    ])
+      assert.equal(await csp(p), CSP, p);
+    assert.equal(await csp('/', 'POST'), CSP);
+  } finally {
+    Module._load = origLoad;
+    if (prevDist === undefined) delete process.env.INKLEAF_DIST;
+    else process.env.INKLEAF_DIST = prevDist;
+    delete require.cache[require.resolve('../protocol')];
+    delete require.cache[require.resolve('../paths')];
+    fs.rmSync(root, { recursive: true, force: true });
+  }
 });

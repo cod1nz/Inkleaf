@@ -26,8 +26,8 @@
   "dist": {
     "html_pages_top_level": 125,
     "total_files": 1479,
-    "size_bytes": 184685347,
-    "size_mb": 184.7,
+    "size_bytes": 184642933,
+    "size_mb": 184.6,
     "locale_json_folders": [
       "ar",
       "be",
@@ -70,9 +70,9 @@
   },
   "installers": [
     {
-      "file": "Inkleaf-Setup-2.8.11-x64.exe",
-      "size_bytes": 210234236,
-      "size_mb": 210.2
+      "file": "Inkleaf-Setup-0.1.0-x64.exe",
+      "size_bytes": 210274566,
+      "size_mb": 210.3
     }
   ],
   "third_party_notices": {

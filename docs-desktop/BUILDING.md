@@ -4,7 +4,7 @@ This file covers the desktop (Electron) build: getting the sources running, prod
 packaging installers, running the tests, and the signing and unsigned-build situation. The project overview is in
 the top-level `README.md`; the feature list is in `docs-desktop/FEATURES.md`.
 
-Version in `package.json`: **2.8.11**. Product name: **Inkleaf**. App id: `dev.inkleaf.desktop`
+Version in `package.json`: **0.1.0**. Product name: **Inkleaf**. App id: `dev.inkleaf.desktop`
 (a placeholder, see `electron-builder.yml`).
 
 ## Requirements
@@ -69,8 +69,8 @@ Configuration lives in `electron-builder.yml`. The main points:
 
 Expected output in `release/` after `npm run dist:win`:
 
-- `Inkleaf-Setup-2.8.11-x64.exe` and its `.blockmap`
-- `Inkleaf-Portable-2.8.11-x64.exe` (configured target; not present in the current local `release/`)
+- `Inkleaf-Setup-0.1.0-x64.exe` and its `.blockmap`
+- `Inkleaf-Portable-0.1.0-x64.exe` (configured target; not present in the current local `release/`)
 - `builder-debug.yml`
 
 The last measured NSIS installer is about **210.2 MB** (`docs-desktop/stats.json`), inside the 220 MB budget.

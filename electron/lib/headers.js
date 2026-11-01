@@ -16,7 +16,14 @@ const CSP = [
   "frame-ancestors 'self'",
 ].join('; ');
 
-function securityHeaders() {
+// Only for responses under /addons/: the LibreOffice (Emscripten) worker uses new Function. A worker takes its CSP
+// from its own script response, so app pages keep the strict CSP. Add-on files are SHA-256 verified before extraction.
+const ADDON_CSP = CSP.replace(
+  "script-src 'self' 'wasm-unsafe-eval'",
+  "script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval'"
+);
+
+function securityHeaders({ addon = false } = {}) {
   return {
     'Cross-Origin-Opener-Policy': 'same-origin',
     'Cross-Origin-Embedder-Policy': 'require-corp',
@@ -25,8 +32,8 @@ function securityHeaders() {
     // <link rel=dns-prefetch> is not covered by CSP and resolves outside webRequest (DNS exfiltration channel).
     'X-DNS-Prefetch-Control': 'off',
     'Referrer-Policy': 'no-referrer',
-    'Content-Security-Policy': CSP,
+    'Content-Security-Policy': addon ? ADDON_CSP : CSP,
   };
 }
 
-module.exports = { CSP, securityHeaders };
+module.exports = { CSP, ADDON_CSP, securityHeaders };

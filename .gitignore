@@ -74,3 +74,7 @@ dist-net
 /dist-net/
 /dist-ui/
 /dist-pkg/
+
+# LibreOffice add-on pack build output
+addon-build/
+dist-lo/

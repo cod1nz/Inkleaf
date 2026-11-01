@@ -2,8 +2,8 @@
 const fs = require('node:fs');
 
 /**
- * Pinned add-on pack descriptors (PLAN D9). Replace REPLACE_ME, sha256 and sizeBytes when the pack is published.
- * The app refuses to download while sha256 is the all-zero placeholder.
+ * Pinned add-on pack descriptors (PLAN D9). The pack is built by scripts/build-lo-pack.cjs and published as a
+ * GitHub release asset; any file whose SHA-256 differs is refused. An all-zero sha256 marks an unpublished pack.
  */
 const VERSION = '1.0.0';
 const MANIFEST = Object.freeze({
@@ -12,9 +12,15 @@ const MANIFEST = Object.freeze({
     title: 'Office converter',
     version: VERSION,
     url: `https://github.com/cod1nz/Inkleaf/releases/download/addons-v1/libreoffice-wasm-${VERSION}.zip`,
-    sha256: '0'.repeat(64),
-    sizeBytes: 75 * 1024 * 1024,
-    requiredFiles: Object.freeze(['soffice.js']),
+    sha256: '9a1ba793f1436858514f98bb9e6000f487c45affdffe2f1697820a97c022a8c5',
+    sizeBytes: 77482554,
+    requiredFiles: Object.freeze([
+      'soffice.js',
+      'soffice.wasm.gz',
+      'soffice.data.gz',
+      'soffice.worker.js',
+      'browser.worker.global.js',
+    ]),
   }),
 });
 
