@@ -10,6 +10,129 @@ import handlebars from 'vite-plugin-handlebars';
 import { resolve } from 'path';
 import fs from 'fs';
 import { createHash } from 'crypto';
+import { desktopChrome } from './vite-plugins/desktop-chrome';
+
+// Desktop (Electron) build: DESKTOP=true. See PLAN.md D2/D3/D4.
+const DESKTOP = process.env.DESKTOP === 'true';
+
+// Web-only/marketing pages that never ship in the desktop build.
+const DESKTOP_EXCLUDED_INPUTS =
+  /^(about|contact|faq|privacy|terms|licensing|kura|hyper-compress|advertise|404|blog-.*|compress-pdf-to-.*|compress-pdf-for-email|wasm-settings)$/;
+
+// Inputs whose source file is gone (deleted marketing pages) are dropped
+// instead of failing the build.
+function pruneInputs(input: Record<string, string>): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [name, file] of Object.entries(input)) {
+    if (DESKTOP && DESKTOP_EXCLUDED_INPUTS.test(name)) continue;
+    if (!fs.existsSync(file)) {
+      console.warn(`[vite] Skipping missing page input: ${name} (${file})`);
+      continue;
+    }
+    out[name] = file;
+  }
+  return out;
+}
+
+function listBlogPages(): string[] {
+  const dir = resolve(__dirname, 'blog');
+  return fs.existsSync(dir)
+    ? fs.readdirSync(dir).filter((f) => f.endsWith('.html'))
+    : [];
+}
+
+// Public assets that must not ship in the desktop dist.
+const DESKTOP_PRUNED_PUBLIC = [
+  'sw.js',
+  'libreoffice-wasm', // D9: optional add-on, not bundled
+  'robots.txt',
+  'site.webmanifest',
+  'CHANGELOG.md',
+];
+
+function desktopPrunePlugin(): Plugin {
+  return {
+    name: 'desktop-prune-public',
+    apply: 'build',
+    enforce: 'post',
+    closeBundle() {
+      const outDir = resolve(__dirname, 'dist');
+      for (const rel of DESKTOP_PRUNED_PUBLIC) {
+        fs.rmSync(resolve(outDir, rel), { recursive: true, force: true });
+      }
+      // Size trims (verified: OCR runs with only the two kept cores; cpdf loads
+      // only coherentpdf.browser.min.js; browsers pick woff2 first).
+      const rm = (rel: string) =>
+        fs.rmSync(resolve(outDir, rel), { recursive: true, force: true });
+      const walk = (dir: string, fn: (file: string) => void) => {
+        for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+          const f = resolve(dir, e.name);
+          if (e.isDirectory()) walk(f, fn);
+          else fn(f);
+        }
+      };
+      walk(outDir, (f) => {
+        if (f.endsWith('.map')) fs.rmSync(f, { force: true });
+      });
+      const keepCores = new Set([
+        'tesseract-core-simd-lstm.wasm.js',
+        'tesseract-core-relaxedsimd-lstm.wasm.js',
+        'LICENSE',
+      ]);
+      const coreDir = resolve(outDir, 'tesseract/core');
+      if (fs.existsSync(coreDir)) {
+        for (const f of fs.readdirSync(coreDir))
+          if (!keepCores.has(f)) rm(`tesseract/core/${f}`);
+      }
+      for (const f of [
+        'coherentpdf.js',
+        'coherentpdf.browser.js',
+        'coherentpdf.min.js',
+      ])
+        rm(`wasm/cpdf/${f}`);
+      rm('coherentpdf.browser.min.js');
+      // Social-card images (og:image) are web-only marketing.
+      for (const f of fs.readdirSync(resolve(outDir, 'images')))
+        if (/^og-.*\.png$/.test(f)) rm(`images/${f}`);
+      const assetsDir = resolve(outDir, 'assets');
+      if (fs.existsSync(assetsDir)) {
+        for (const f of fs.readdirSync(assetsDir)) {
+          if (
+            /^(KaTeX_|Phosphor-).*\.(ttf|woff)$/.test(f) ||
+            /^Phosphor-.*\.svg$/.test(f)
+          )
+            rm(`assets/${f}`);
+        }
+      }
+    },
+  };
+}
+
+// Desktop: neutralize remote URLs baked into the vendored editor bundle
+// (bentopdf-viewer): the Google Fonts @import in its shadow-DOM CSS and the
+// jsDelivr defaults for pdfium/fonts. All real call sites pass local URLs.
+function desktopStripRemoteUrlsPlugin(): Plugin {
+  return {
+    name: 'desktop-strip-remote-urls',
+    apply: 'build',
+    enforce: 'pre',
+    transform(code, id) {
+      if (!/node_modules[\/](bentopdf-viewer|bentopdf-pdfium)[\/]/.test(id)) {
+        return null;
+      }
+      const out = code
+        .replace(
+          /@import url\(\\?['"]https:\/\/fonts\.googleapis\.com[^)]*\);?/g,
+          ''
+        )
+        .replace(
+          /https:\/\/cdn\.jsdelivr\.net\/npm\//g,
+          '/__offline_disabled__/npm/'
+        );
+      return out === code ? null : { code: out, map: null };
+    },
+  };
+}
 
 function engineVersion(): string {
   try {
@@ -380,11 +503,11 @@ function languageRouterPlugin(): Plugin {
   return {
     name: 'language-router',
     configureServer(server) {
-      server.middlewares.use(createCorsProxyMiddleware());
+      if (!DESKTOP) server.middlewares.use(createCorsProxyMiddleware());
       server.middlewares.use(createLanguageMiddleware(true));
     },
     configurePreviewServer(server) {
-      server.middlewares.use(createCorsProxyMiddleware());
+      if (!DESKTOP) server.middlewares.use(createCorsProxyMiddleware());
       server.middlewares.use(createLanguageMiddleware(false));
     },
   };
@@ -551,7 +674,10 @@ function flattenPagesPlugin(): Plugin {
         }
       }
 
-      if (process.env.SIMPLE_MODE === 'true' && bundle['simple-index.html']) {
+      if (
+        (process.env.SIMPLE_MODE === 'true' || DESKTOP) &&
+        bundle['simple-index.html']
+      ) {
         moves.push({ from: 'simple-index.html', to: 'index.html' });
       }
 
@@ -681,15 +807,17 @@ export default defineConfig(({ command }) => {
   const USE_CDN = process.env.VITE_USE_CDN === 'true';
   const baseUrl = (process.env.BASE_URL || '/').replace(/\/?$/, '/');
   const docsUrl =
+    !DESKTOP &&
     baseUrl === '/' &&
     (command === 'serve' || process.env.INCLUDE_DOCS === 'true')
       ? '/docs/'
       : 'https://www.bentopdf.com/docs';
   const showAds =
-    command === 'serve' ||
-    ['bentopdf.com', 'www.bentopdf.com'].includes(
-      process.env.VERCEL_PROJECT_PRODUCTION_URL ?? ''
-    );
+    !DESKTOP &&
+    (command === 'serve' ||
+      ['bentopdf.com', 'www.bentopdf.com'].includes(
+        process.env.VERCEL_PROJECT_PRODUCTION_URL ?? ''
+      ));
 
   if (USE_CDN) {
     console.log('[Vite] Using CDN for WASM files (with local fallback)');
@@ -698,7 +826,8 @@ export default defineConfig(({ command }) => {
   }
 
   return {
-    base: (process.env.BASE_URL || '/').replace(/\/?$/, '/'),
+    // Desktop is always served from the origin root (app://bentopdf/).
+    base: DESKTOP ? '/' : (process.env.BASE_URL || '/').replace(/\/?$/, '/'),
     worker: {
       format: 'es' as const,
     },
@@ -709,7 +838,7 @@ export default defineConfig(({ command }) => {
         context: {
           baseUrl: (process.env.BASE_URL || '/').replace(/\/?$/, '/'),
           docsUrl,
-          simpleMode: process.env.SIMPLE_MODE === 'true',
+          simpleMode: DESKTOP || process.env.SIMPLE_MODE === 'true',
           brandName: process.env.VITE_BRAND_NAME || '',
           brandLogo: process.env.VITE_BRAND_LOGO || '',
           footerText: process.env.VITE_FOOTER_TEXT || '',
@@ -719,10 +848,16 @@ export default defineConfig(({ command }) => {
       }),
       languageRouterPlugin(),
       devPageTranslationsPlugin(),
-      languageRedirectPlugin(),
+      ...(DESKTOP ? [] : [languageRedirectPlugin()]),
       flattenPagesPlugin(),
-      rewriteHtmlPathsPlugin(),
-      swPrecachePlugin(),
+      ...(DESKTOP ? [] : [rewriteHtmlPathsPlugin(), swPrecachePlugin()]),
+      ...(DESKTOP
+        ? [
+            desktopStripRemoteUrlsPlugin(),
+            desktopPrunePlugin(),
+            desktopChrome(),
+          ]
+        : []),
       tailwindcss(),
       nodePolyfills({
         include: ['buffer', 'stream', 'util', 'zlib', 'process'],
@@ -734,9 +869,19 @@ export default defineConfig(({ command }) => {
       }),
     ],
     define: {
-      __SIMPLE_MODE__: JSON.stringify(process.env.SIMPLE_MODE === 'true'),
+      __DESKTOP__: JSON.stringify(DESKTOP),
+      __SIMPLE_MODE__: JSON.stringify(
+        DESKTOP || process.env.SIMPLE_MODE === 'true'
+      ),
+      ...(DESKTOP
+        ? {
+            // Desktop ships English OCR data only.
+            'import.meta.env.VITE_TESSERACT_AVAILABLE_LANGUAGES':
+              JSON.stringify('eng'),
+          }
+        : {}),
       __DISABLE_GITHUB_STARS__: JSON.stringify(
-        process.env.DISABLE_GITHUB_STARS === 'true'
+        DESKTOP || process.env.DISABLE_GITHUB_STARS === 'true'
       ),
       __BRAND_NAME__: JSON.stringify(process.env.VITE_BRAND_NAME || ''),
       __DISABLED_TOOLS__: JSON.stringify(
@@ -766,40 +911,48 @@ export default defineConfig(({ command }) => {
     },
     server: {
       host: process.env.VITE_DEV_HOST || 'localhost',
-      proxy: {
-        '/docs': {
-          target: 'http://localhost:5174',
-          ws: true,
-          configure: (proxy) => {
-            proxy.on('error', (_error, _req, res) => {
-              if (!('writeHead' in res) || res.headersSent) return;
-              res.writeHead(502, { 'Content-Type': 'text/plain' });
-              res.end(
-                'The docs dev server is not running. Start it with: npm run docs:dev'
-              );
-            });
+      proxy: DESKTOP
+        ? undefined
+        : {
+            '/docs': {
+              target: 'http://localhost:5174',
+              ws: true,
+              configure: (proxy) => {
+                proxy.on('error', (_error, _req, res) => {
+                  if (!('writeHead' in res) || res.headersSent) return;
+                  res.writeHead(502, { 'Content-Type': 'text/plain' });
+                  res.end(
+                    'The docs dev server is not running. Start it with: npm run docs:dev'
+                  );
+                });
+              },
+            },
           },
-        },
-      },
       watch: {
         ignored: ['!**/node_modules/bentopdf-pdfium/**'],
       },
-      headers: {
-        'Cross-Origin-Opener-Policy': 'same-origin',
-        'Cross-Origin-Embedder-Policy': 'require-corp',
-      },
+      // Desktop: the Electron main process sets COOP/COEP/CSP itself.
+      headers: DESKTOP
+        ? undefined
+        : {
+            'Cross-Origin-Opener-Policy': 'same-origin',
+            'Cross-Origin-Embedder-Policy': 'require-corp',
+          },
     },
     preview: {
-      headers: {
-        'Cross-Origin-Opener-Policy': 'same-origin',
-        'Cross-Origin-Embedder-Policy': 'require-corp',
-      },
+      headers: DESKTOP
+        ? undefined
+        : {
+            'Cross-Origin-Opener-Policy': 'same-origin',
+            'Cross-Origin-Embedder-Policy': 'require-corp',
+          },
     },
     build: {
+      ...(DESKTOP ? { sourcemap: false } : {}),
       rollupOptions: {
-        input: {
+        input: pruneInputs({
           main:
-            process.env.SIMPLE_MODE === 'true'
+            DESKTOP || process.env.SIMPLE_MODE === 'true'
               ? resolve(__dirname, 'simple-index.html')
               : resolve(__dirname, 'index.html'),
           about: resolve(__dirname, 'about.html'),
@@ -814,13 +967,10 @@ export default defineConfig(({ command }) => {
             ? { advertise: resolve(__dirname, 'advertise.html') }
             : {}),
           ...Object.fromEntries(
-            fs
-              .readdirSync(resolve(__dirname, 'blog'))
-              .filter((f) => f.endsWith('.html'))
-              .map((f) => [
-                `blog-${f.replace('.html', '')}`,
-                resolve(__dirname, 'blog', f),
-              ])
+            listBlogPages().map((f) => [
+              `blog-${f.replace('.html', '')}`,
+              resolve(__dirname, 'blog', f),
+            ])
           ),
           '404': resolve(__dirname, '404.html'),
           // Category Hub Pages
@@ -1041,7 +1191,9 @@ export default defineConfig(({ command }) => {
             __dirname,
             'src/pages/bates-numbering.html'
           ),
-        },
+          // Desktop launcher (M4), present only once that module lands.
+          ...(DESKTOP ? { desktop: resolve(__dirname, 'desktop.html') } : {}),
+        }),
         output: {
           assetFileNames: (assetInfo) => {
             const name = assetInfo.names?.[0] ?? '';

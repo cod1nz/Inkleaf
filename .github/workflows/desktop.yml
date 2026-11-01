@@ -1,0 +1,176 @@
+name: desktop
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+  pull_request:
+    paths:
+      - 'electron/**'
+      - 'src/desktop/**'
+      - 'electron-builder.yml'
+      - '.github/workflows/desktop.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # PLAN D8 target is 150; the real Electron + wasm payload is ~200 MB (see scripts/check-installer-size.mjs).
+  INSTALLER_BUDGET_MB: '220'
+
+jobs:
+  # Runs on PRs too (build-check): lint + unit tests only, no packaging.
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Dependency audit (runtime deps, high+)
+        run: npm audit --omit=dev --audit-level=high
+        continue-on-error: true
+      - name: Lint desktop shell
+        run: npx eslint electron
+      - name: Unit tests (vitest)
+        run: npx vitest run
+      - name: Electron shell tests (node:test)
+        run: node --test "electron/__tests__/*.test.js"
+
+  build-windows:
+    if: github.event_name != 'pull_request'
+    needs: test
+    runs-on: windows-latest
+    # Signing secrets are scoped to the packaging step only, so npm install scripts and the web build never see them.
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .cache-assets
+          key: desktop-assets-${{ runner.os }}-${{ hashFiles('scripts/desktop-assets.lock.json') }}
+      - run: npm run build:desktop
+      - name: Package (NSIS + portable)
+        shell: bash
+        env:
+          CSC_LINK: ${{ secrets.CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+        run: |
+          if [ -z "$CSC_LINK" ]; then
+            echo "::warning::No CSC_LINK secret: building UNSIGNED Windows installer"
+            echo "### Windows: unsigned build (no CSC_LINK secret)" >> "$GITHUB_STEP_SUMMARY"
+            export CSC_IDENTITY_AUTO_DISCOVERY=false
+          else
+            echo "### Windows: signed build" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          npx electron-builder --win
+      - name: Installer size check
+        run: npm run size:check
+      - name: Checksums
+        shell: bash
+        run: |
+          cd release
+          sha256sum *.exe > SHA256SUMS-windows.txt
+          cat SHA256SUMS-windows.txt >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: inkleaf-windows
+          path: |
+            release/*.exe
+            release/SHA256SUMS-windows.txt
+          if-no-files-found: error
+
+  build-macos:
+    if: github.event_name != 'pull_request'
+    needs: test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .cache-assets
+          key: desktop-assets-${{ runner.os }}-${{ hashFiles('scripts/desktop-assets.lock.json') }}
+      - run: npm run build:desktop
+      - name: Package (dmg arm64 + x64)
+        env:
+          CSC_LINK: ${{ secrets.CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          ARGS=""
+          if [ -z "$CSC_LINK" ]; then
+            echo "::warning::No CSC_LINK secret: building UNSIGNED, un-notarized dmgs"
+            echo "### macOS: unsigned, not notarized (no CSC_LINK secret)" >> "$GITHUB_STEP_SUMMARY"
+            export CSC_IDENTITY_AUTO_DISCOVERY=false
+            ARGS="-c.mac.identity=null"
+          elif [ -n "$APPLE_ID" ] && [ -n "$APPLE_APP_SPECIFIC_PASSWORD" ] && [ -n "$APPLE_TEAM_ID" ]; then
+            echo "### macOS: signed + notarized" >> "$GITHUB_STEP_SUMMARY"
+            ARGS="-c.mac.notarize=true"
+          else
+            echo "### macOS: signed, NOT notarized (Apple secrets missing)" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          npx electron-builder --mac $ARGS
+      - name: Installer size check
+        run: npm run size:check
+      - name: Checksums
+        run: |
+          cd release
+          shasum -a 256 *.dmg > SHA256SUMS-macos.txt
+          cat SHA256SUMS-macos.txt >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: inkleaf-macos
+          path: |
+            release/*.dmg
+            release/SHA256SUMS-macos.txt
+          if-no-files-found: error
+
+  # Tag pushes only: assembles a DRAFT release (never auto-published).
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [build-windows, build-macos]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Combine checksums
+        run: |
+          cd artifacts
+          cat SHA256SUMS-windows.txt SHA256SUMS-macos.txt > SHA256SUMS.txt
+          rm SHA256SUMS-windows.txt SHA256SUMS-macos.txt
+          ls -l
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" artifacts/* \
+            --repo "$GITHUB_REPOSITORY" --draft --verify-tag \
+            --title "Inkleaf $GITHUB_REF_NAME" \
+            --notes "Draft. Verify checksums in SHA256SUMS.txt. Builds are unsigned unless signing secrets were configured."

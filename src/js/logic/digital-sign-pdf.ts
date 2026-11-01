@@ -119,12 +119,19 @@ export function parseCombinedPem(
  * deliberately scoped to the official domains so self-hosted instances keep
  * requiring their own proxy.
  */
-const DEFAULT_CORS_PROXY_URL =
-  'https://bentopdf-cors-proxy.bentopdf.workers.dev';
+// Desktop build: no proxy exists (PLAN D3). The remote constant is
+// dead-code-eliminated when __DESKTOP__ is true.
+const IS_DESKTOP = typeof __DESKTOP__ !== 'undefined' && __DESKTOP__;
+const DEFAULT_CORS_PROXY_URL = IS_DESKTOP
+  ? ''
+  : 'https://bentopdf-cors-proxy.bentopdf.workers.dev';
 
 const OFFICIAL_HOSTNAMES = new Set(['bentopdf.com', 'www.bentopdf.com']);
 
 function resolveCorsProxyUrl(): string {
+  if (IS_DESKTOP) {
+    return '';
+  }
   const configured = import.meta.env.VITE_CORS_PROXY_URL || '';
   if (configured) {
     return configured;
@@ -225,6 +232,13 @@ async function buildCorsProxyUrl(url: string): Promise<string> {
  *
  */
 let fetchWrapRefCount = 0;
+let tsaFetchAllowed = false;
+
+function desktopOfflineError(url: string): Error {
+  return new Error(
+    `This operation needs internet access and is disabled in the offline desktop app (${url})`
+  );
+}
 let savedOriginalFetch: typeof fetch | null = null;
 
 function createCorsAwareFetch(): {
@@ -275,6 +289,18 @@ function createCorsAwareFetch(): {
         !isAlreadyProxied &&
         (isExternalCertificateUrl || isTsaRequest) &&
         !url.startsWith(window.location.origin);
+
+      if (IS_DESKTOP && shouldProxy) {
+        // Remote certificate-chain (AIA/OCSP/CRL) fetches are never allowed.
+        // TSA requests are allowed only inside an explicit timestampPdf() call.
+        if (!(isTsaRequest && tsaFetchAllowed)) {
+          throw desktopOfflineError(url);
+        }
+        // The renderer has no network: the DER request goes to the main process (consent + allowlisted TSA).
+        const { desktopTimestampFetch } =
+          await import('../../desktop/addons/tsa-bridge');
+        return desktopTimestampFetch(url, init);
+      }
 
       if (shouldProxy && CORS_PROXY_URL) {
         const proxyUrl = await buildCorsProxyUrl(url);
@@ -426,11 +452,13 @@ export async function timestampPdf(
   const signer = new PdfSigner(signOptions);
 
   const { restore } = createCorsAwareFetch();
+  tsaFetchAllowed = true;
 
   try {
     const timestampedPdfBytes = await signer.sign(pdfBytes);
     return new Uint8Array(timestampedPdfBytes);
   } finally {
+    tsaFetchAllowed = false;
     restore();
   }
 }

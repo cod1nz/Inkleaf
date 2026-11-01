@@ -1,4 +1,7 @@
 import { trHtml, trText } from '../i18n/i18n.js';
+// Replaced at build time by vite `define`; guarded so unit tests (which
+// use vitest.config.ts) still run in web mode.
+const IS_DESKTOP = typeof __DESKTOP__ !== 'undefined' && __DESKTOP__;
 export type WasmPackage = 'pymupdf' | 'ghostscript' | 'cpdf';
 
 interface WasmProviderConfig {
@@ -9,27 +12,44 @@ interface WasmProviderConfig {
 
 const STORAGE_KEY = 'bentopdf:wasm-providers';
 
-const CDN_DEFAULTS: Record<WasmPackage, string> = {
-  pymupdf: 'https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.16/',
-  ghostscript: 'https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm@0.1.1/assets/',
-  cpdf: 'https://cdn.jsdelivr.net/npm/coherentpdf@2.5.5/dist/',
-};
+// Desktop build: assets are bundled and served same-origin (app://bentopdf/).
+// The remote URLs below are dead-code-eliminated when IS_DESKTOP is true.
+function localAssetUrl(path: string): string {
+  return typeof location !== 'undefined' && location.href
+    ? new URL(path, location.href).href
+    : path;
+}
+
+const CDN_DEFAULTS: Record<WasmPackage, string> = IS_DESKTOP
+  ? {
+      pymupdf: localAssetUrl('/wasm/pymupdf/'),
+      ghostscript: localAssetUrl('/wasm/gs/'),
+      cpdf: localAssetUrl('/wasm/cpdf/'),
+    }
+  : {
+      pymupdf: 'https://cdn.jsdelivr.net/npm/@bentopdf/pymupdf-wasm@0.11.16/',
+      ghostscript:
+        'https://cdn.jsdelivr.net/npm/@bentopdf/gs-wasm@0.1.1/assets/',
+      cpdf: 'https://cdn.jsdelivr.net/npm/coherentpdf@2.5.5/dist/',
+    };
 
 function envOrDefault(envVar: string | undefined, fallback: string): string {
   return envVar || fallback;
 }
 
-const ENV_DEFAULTS: Record<WasmPackage, string> = {
-  pymupdf: envOrDefault(
-    import.meta.env.VITE_WASM_PYMUPDF_URL,
-    CDN_DEFAULTS.pymupdf
-  ),
-  ghostscript: envOrDefault(
-    import.meta.env.VITE_WASM_GS_URL,
-    CDN_DEFAULTS.ghostscript
-  ),
-  cpdf: envOrDefault(import.meta.env.VITE_WASM_CPDF_URL, CDN_DEFAULTS.cpdf),
-};
+const ENV_DEFAULTS: Record<WasmPackage, string> = IS_DESKTOP
+  ? { ...CDN_DEFAULTS }
+  : {
+      pymupdf: envOrDefault(
+        import.meta.env.VITE_WASM_PYMUPDF_URL,
+        CDN_DEFAULTS.pymupdf
+      ),
+      ghostscript: envOrDefault(
+        import.meta.env.VITE_WASM_GS_URL,
+        CDN_DEFAULTS.ghostscript
+      ),
+      cpdf: envOrDefault(import.meta.env.VITE_WASM_CPDF_URL, CDN_DEFAULTS.cpdf),
+    };
 
 function hostnameOf(url: string): string | null {
   try {
@@ -85,6 +105,15 @@ class WasmProviderManager {
   }
 
   private loadConfig(): WasmProviderConfig {
+    if (IS_DESKTOP) {
+      // Always local in desktop mode: ignore and scrub any stored override.
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch {
+        /* storage unavailable */
+      }
+      return {};
+    }
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (!stored) return {};
@@ -142,6 +171,7 @@ class WasmProviderManager {
   }
 
   getUrl(packageName: WasmPackage): string | undefined {
+    if (IS_DESKTOP) return ENV_DEFAULTS[packageName];
     const stored = this.config[packageName];
     if (stored) {
       if (this.isTrustedUrl(stored)) return stored;
@@ -153,6 +183,7 @@ class WasmProviderManager {
   }
 
   setUrl(packageName: WasmPackage, url: string): void {
+    if (IS_DESKTOP) return;
     const normalizedUrl = withTrailingSlash(url);
     const host = hostnameOf(normalizedUrl);
     if (!host) {
@@ -198,6 +229,7 @@ class WasmProviderManager {
     packageName: WasmPackage,
     url?: string
   ): Promise<{ valid: boolean; error?: string }> {
+    if (IS_DESKTOP) return { valid: true };
     const testUrl = url || this.config[packageName];
     if (!testUrl) {
       return { valid: false, error: trText('No URL configured') };

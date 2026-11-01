@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSD sang PDF",
-    "subtitle": "Chuyển đổi tệp Adobe Photoshop (PSD) sang định dạng PDF. Hỗ trợ nhiều tệp.",
+    "subtitle": "Chuyển đổi tệp PSD sang định dạng PDF. Hỗ trợ nhiều tệp.",
     "acceptedFormats": "Tệp PSD",
     "convertButton": "Chuyển đổi sang PDF"
   },

@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSD para PDF",
-    "subtitle": "Converte Adobe Photoshop (PSD) para PDF. Suporta múltiplos arquivos.",
+    "subtitle": "Converte PSD para PDF. Suporta múltiplos arquivos.",
     "acceptedFormats": "Arquivos PSD",
     "convertButton": "Converter para PDF"
   },

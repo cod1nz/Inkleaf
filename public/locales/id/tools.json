@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSD ke PDF",
-    "subtitle": "Konversi file Adobe Photoshop (PSD) ke format PDF. Mendukung beberapa file.",
+    "subtitle": "Konversi file PSD ke format PDF. Mendukung beberapa file.",
     "acceptedFormats": "File PSD",
     "convertButton": "Konversi ke PDF"
   },

@@ -417,8 +417,7 @@ const baseCategories = [
         href: import.meta.env.BASE_URL + 'psd-to-pdf.html',
         name: 'PSD to PDF',
         icon: 'ph-image',
-        subtitle:
-          'Convert Adobe Photoshop (PSD) files to PDF. Multiple files supported.',
+        subtitle: 'Convert PSD files to PDF. Multiple files supported.',
       },
       {
         href: import.meta.env.BASE_URL + 'email-to-pdf.html',

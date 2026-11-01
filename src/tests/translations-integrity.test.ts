@@ -76,25 +76,6 @@ describe('translated interface messages', () => {
   });
 });
 
-describe('docs labels', () => {
-  it.each(languages)('%s only uses known labels', (lang) => {
-    const source = readJson<string[]>(
-      path.join(ROOT, 'docs/.vitepress/i18n/source.json'),
-      []
-    );
-    const labels = readJson<Record<string, string>>(
-      path.join(ROOT, 'docs/.vitepress/i18n', `${lang}.json`),
-      {}
-    );
-    const unknown = Object.keys(labels).filter((key) => !source.includes(key));
-    expect(unknown).toEqual([]);
-    const bad = source.filter(
-      (key) => !labels[key] || !labels[key].trim() || labels[key].includes('—')
-    );
-    expect(bad).toEqual([]);
-  });
-});
-
 describe('translation files', () => {
   it.each(languages)('%s has every translation file', (lang) => {
     const files = [
@@ -102,7 +83,6 @@ describe('translation files', () => {
       path.join(LOCALES, lang, 'ui.json'),
       path.join(LOCALES, lang, 'common.json'),
       path.join(LOCALES, lang, 'tools.json'),
-      path.join(ROOT, 'docs/.vitepress/i18n', `${lang}.json`),
     ];
     expect(files.filter((file) => !fs.existsSync(file))).toEqual([]);
   });

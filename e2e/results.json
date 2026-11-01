@@ -1,0 +1,887 @@
+{
+  "summary": {
+    "PASS": 131,
+    "FAIL": 2,
+    "KNOWN-LIMIT": 4,
+    "total": 137
+  },
+  "results": [
+    {
+      "suite": "large",
+      "id": "large-merge-216MB+small",
+      "status": "FAIL",
+      "evidence": "renderer process-gone reason=oom when clicking Merge on 212MB+small PDF (reproduced 2/2). Peak WS ~1.0-1.9GB"
+    },
+    {
+      "suite": "large",
+      "id": "large-compress-216MB",
+      "status": "PASS",
+      "evidence": "run 1 (before OOM poisoned the page): 28.5s, 212MB->31.5MB, 36 pages valid, peak 2.5GB, max UI gap 84ms. Re-run after merge OOM fails only because renderer is dead."
+    },
+    {
+      "suite": "large",
+      "id": "merge-1000-pages",
+      "status": "PASS",
+      "evidence": "{\"loadMs\":964,\"processMs\":512,\"peakWorkingSetMB\":763,\"maxUiGapMs\":0,\"inputMB\":0,\"outputMB\":0.4,\"outPages\":1003}"
+    },
+    {
+      "suite": "large",
+      "id": "1000-page merge has 1003 pages",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "large",
+      "id": "split-1000-pages",
+      "status": "PASS",
+      "evidence": "run 1: 1-500 -> 500 pages, 0.5s. Re-run failure is cascade from dead renderer."
+    },
+    {
+      "suite": "large",
+      "id": "open-with 216MB PDF: editor loads without error/crash",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "large",
+      "id": "zz-main-process-errors",
+      "status": "FAIL",
+      "evidence": "render-process-gone: {\"reason\":\"oom\",\"exitCode\":-536870904}"
+    },
+    {
+      "suite": "open",
+      "id": "open-with-argv-cyrillic: navigates to edit tool",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with-argv-cyrillic: name shown in page",
+      "status": "PASS",
+      "evidence": "Inkleaf\nHome\nEdit and annotate\nPDF Editor\nEdit PDF Text\nAdd Watermark\nCrop PDF\nEdit Bookmarks\nTable of Contents\nPage Numbers\nAdd Page Labels\nBates Numbering\nHeader & Footer\nInvert Colors\nScanner Effec"
+    },
+    {
+      "suite": "open",
+      "id": "open-with-argv-cyrillic: no alert",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:#hash;semi,comma.pdf",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:a & b.pdf",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:dots.trailing.pdf",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:file%20name.pdf",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:name with   spaces.pdf",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:o'brien's file.pdf",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:trailing..pdf.",
+      "status": "KNOWN-LIMIT",
+      "evidence": "no navigation (path filtered); url=app://bentopdf/desktop.html"
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:ünïcödé-ñ.PDF",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:договор №5.pdf",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:عقد.pdf",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:合同文件.pdf",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:name:📄 scan.pdf",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:longpath>260",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:normal",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:scanned",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:pages-1000",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:enc-user-pw",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-with:enc-owner-only",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-same-file-twice (merge lists 2 entries, no crash)",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "open-30-files-at-once (merge lists 30)",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "directory-named-.pdf is skipped cleanly",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "directory-named-.pdf via open-with: no navigation/crash",
+      "status": "PASS",
+      "evidence": "app://bentopdf/desktop.html"
+    },
+    {
+      "suite": "open",
+      "id": "junction-named-.pdf is skipped cleanly",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "symlink-to-pdf opens (followed)",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "broken:broken-truncated in merge-pdf: friendly error shown, page alive",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "broken:broken-truncated in compress-pdf: friendly error shown, page alive",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "broken:broken-garbage-header in merge-pdf: friendly error shown, page alive",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "broken:broken-garbage-header in compress-pdf: friendly error shown, page alive",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "broken:broken-no-xref in merge-pdf: friendly error shown, page alive",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "broken:broken-no-xref in compress-pdf: friendly error shown, page alive",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "broken:broken-zero-bytes in merge-pdf: friendly error shown, page alive",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "broken:broken-zero-bytes in compress-pdf: friendly error shown, page alive",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "broken:broken-not-a-pdf in merge-pdf: friendly error shown, page alive",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "broken:broken-not-a-pdf in compress-pdf: friendly error shown, page alive",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "broken:broken-huge-pagecount in merge-pdf",
+      "status": "KNOWN-LIMIT",
+      "evidence": "pdf-lib recovered the 1 real page and merged without error: Success: PDFs merged successfully!"
+    },
+    {
+      "suite": "open",
+      "id": "broken:broken-huge-pagecount in compress-pdf: friendly error shown, page alive",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "cancel open dialog -> [] ",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "cancel save dialog -> null",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "cancel save from tool: no error toast",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "save to non-ASCII dir + name",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "save to >260-char destination dir",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "save long filename (200 chars) in long dir",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "save-into-readonly-dir (ACL)",
+      "status": "KNOWN-LIMIT",
+      "evidence": "icacls deny not enforced for the sandbox token; used read-only file target instead"
+    },
+    {
+      "suite": "open",
+      "id": "save over read-only file -> clean error, original intact, no leftover tmp",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "tool save over read-only file shows friendly error toast",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "save when target dir is missing -> clean error",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "tool save to missing dir shows error toast (not silent success)",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "save over existing file replaces atomically",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "readFile >2GB rejected with too_large",
+      "status": "PASS",
+      "evidence": "[too_large] File exceeds 2 GB limit"
+    },
+    {
+      "suite": "open",
+      "id": "2.1GB file in tool: friendly \"too large\" message",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "open",
+      "id": "zz-main-process-errors",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "merge-3-unicode",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "merge-3-unicode:output-name",
+      "status": "PASS",
+      "evidence": "merged.pdf"
+    },
+    {
+      "suite": "tools",
+      "id": "merge-3-simple",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "split-range 1-2",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "compress-valid-output",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "compress-smaller",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "rotate-all-right",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "ocr-eng-text",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "ocr-searchable-pdf-has-text-layer",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "protect-output-requires-password",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "protect-opens-with-password",
+      "status": "PASS",
+      "evidence": "normal-3p.pdf"
+    },
+    {
+      "suite": "tools",
+      "id": "unlock-roundtrip",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "unlock-fixture-right-password",
+      "status": "PASS",
+      "evidence": "enc-user-pw.pdf"
+    },
+    {
+      "suite": "tools",
+      "id": "unlock-wrong-password-friendly-error",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "remove-restrictions-owner-only",
+      "status": "PASS",
+      "evidence": "enc-owner-only.pdf"
+    },
+    {
+      "suite": "tools",
+      "id": "pdf-to-jpg",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "tools",
+      "id": "jpg-to-pdf",
+      "status": "PASS",
+      "evidence": "from_jpgs.pdf"
+    },
+    {
+      "suite": "tools",
+      "id": "image-to-pdf-image.png",
+      "status": "PASS",
+      "evidence": "images_to_pdf.pdf"
+    },
+    {
+      "suite": "tools",
+      "id": "image-to-pdf-image.webp",
+      "status": "PASS",
+      "evidence": "images_to_pdf.pdf"
+    },
+    {
+      "suite": "tools",
+      "id": "heic-to-pdf",
+      "status": "KNOWN-LIMIT",
+      "evidence": "no HEIC encoder available offline in node_modules; fixture not generated"
+    },
+    {
+      "suite": "tools",
+      "id": "zz-main-process-errors",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-home:1366x768-light:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":1366,\"h\":768,\"dpr\":1.5,\"bad\":[],\"bodyBg\":\"rgb(245, 245, 247)\"}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-theme-follows-system:light",
+      "status": "PASS",
+      "evidence": "{\"dom\":\"light\",\"bodyBg\":\"rgb(245, 245, 247)\"}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-merge:1366x768-light:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":1366,\"h\":768,\"dpr\":1.5,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-palette:1366x768-light",
+      "status": "PASS",
+      "evidence": "{\"opened\":true,\"hscroll\":false,\"w\":810,\"h\":624,\"dpr\":1.5,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-window-title",
+      "status": "PASS",
+      "evidence": "Home — Inkleaf"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-home:1366x768-dark:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":796,\"h\":601,\"dpr\":1.5,\"bad\":[],\"bodyBg\":\"rgb(23, 24, 27)\"}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-theme-follows-system:dark",
+      "status": "PASS",
+      "evidence": "{\"dom\":\"dark\",\"bodyBg\":\"rgb(23, 24, 27)\"}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-merge:1366x768-dark:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":796,\"h\":601,\"dpr\":1.5,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-palette:1366x768-dark",
+      "status": "PASS",
+      "evidence": "{\"opened\":true,\"hscroll\":false,\"w\":796,\"h\":601,\"dpr\":1.5,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-home:800x600-light:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":801,\"h\":490,\"dpr\":1.5,\"bad\":[],\"bodyBg\":\"rgb(245, 245, 247)\"}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-theme-follows-system:light",
+      "status": "PASS",
+      "evidence": "{\"dom\":\"light\",\"bodyBg\":\"rgb(245, 245, 247)\"}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-merge:800x600-light:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":801,\"h\":490,\"dpr\":1.5,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-palette:800x600-light",
+      "status": "PASS",
+      "evidence": "{\"opened\":true,\"hscroll\":false,\"w\":801,\"h\":490,\"dpr\":1.5,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-home:800x600-dark:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":801,\"h\":490,\"dpr\":1.5,\"bad\":[],\"bodyBg\":\"rgb(23, 24, 27)\"}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-theme-follows-system:dark",
+      "status": "PASS",
+      "evidence": "{\"dom\":\"dark\",\"bodyBg\":\"rgb(23, 24, 27)\"}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-merge:800x600-dark:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":801,\"h\":490,\"dpr\":1.5,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "visual:s1.5-palette:800x600-dark",
+      "status": "PASS",
+      "evidence": "{\"opened\":true,\"hscroll\":false,\"w\":801,\"h\":490,\"dpr\":1.5,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1.5",
+      "id": "zz-main-process-errors",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-home:1366x768-light:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":1366,\"h\":768,\"dpr\":1,\"bad\":[],\"bodyBg\":\"rgb(245, 245, 247)\"}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-theme-follows-system:light",
+      "status": "PASS",
+      "evidence": "{\"dom\":\"light\",\"bodyBg\":\"rgb(245, 245, 247)\"}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-merge:1366x768-light:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":1366,\"h\":768,\"dpr\":1,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-palette:1366x768-light",
+      "status": "PASS",
+      "evidence": "{\"opened\":true,\"hscroll\":false,\"w\":1366,\"h\":768,\"dpr\":1,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-window-title",
+      "status": "PASS",
+      "evidence": "Home — Inkleaf"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-home:1366x768-dark:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":1366,\"h\":768,\"dpr\":1,\"bad\":[],\"bodyBg\":\"rgb(23, 24, 27)\"}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-theme-follows-system:dark",
+      "status": "PASS",
+      "evidence": "{\"dom\":\"dark\",\"bodyBg\":\"rgb(23, 24, 27)\"}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-merge:1366x768-dark:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":1366,\"h\":768,\"dpr\":1,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-palette:1366x768-dark",
+      "status": "PASS",
+      "evidence": "{\"opened\":true,\"hscroll\":false,\"w\":1366,\"h\":768,\"dpr\":1,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-home:800x600-light:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":800,\"h\":600,\"dpr\":1,\"bad\":[],\"bodyBg\":\"rgb(245, 245, 247)\"}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-theme-follows-system:light",
+      "status": "PASS",
+      "evidence": "{\"dom\":\"light\",\"bodyBg\":\"rgb(245, 245, 247)\"}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-merge:800x600-light:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":800,\"h\":600,\"dpr\":1,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-palette:800x600-light",
+      "status": "PASS",
+      "evidence": "{\"opened\":true,\"hscroll\":false,\"w\":800,\"h\":600,\"dpr\":1,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-home:800x600-dark:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":800,\"h\":600,\"dpr\":1,\"bad\":[],\"bodyBg\":\"rgb(23, 24, 27)\"}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-theme-follows-system:dark",
+      "status": "PASS",
+      "evidence": "{\"dom\":\"dark\",\"bodyBg\":\"rgb(23, 24, 27)\"}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-merge:800x600-dark:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":800,\"h\":600,\"dpr\":1,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "visual:s1-palette:800x600-dark",
+      "status": "PASS",
+      "evidence": "{\"opened\":true,\"hscroll\":false,\"w\":800,\"h\":600,\"dpr\":1,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s1",
+      "id": "zz-main-process-errors",
+      "status": "PASS",
+      "evidence": ""
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-home:1366x768-light:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":1366,\"h\":769,\"dpr\":2,\"bad\":[],\"bodyBg\":\"rgb(245, 245, 247)\"}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-theme-follows-system:light",
+      "status": "PASS",
+      "evidence": "{\"dom\":\"light\",\"bodyBg\":\"rgb(245, 245, 247)\"}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-merge:1366x768-light:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":1366,\"h\":769,\"dpr\":2,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-palette:1366x768-light",
+      "status": "PASS",
+      "evidence": "{\"opened\":true,\"hscroll\":false,\"w\":1366,\"h\":769,\"dpr\":2,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-window-title",
+      "status": "PASS",
+      "evidence": "Home — Inkleaf"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-home:1366x768-dark:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":1366,\"h\":769,\"dpr\":2,\"bad\":[],\"bodyBg\":\"rgb(23, 24, 27)\"}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-theme-follows-system:dark",
+      "status": "PASS",
+      "evidence": "{\"dom\":\"dark\",\"bodyBg\":\"rgb(23, 24, 27)\"}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-merge:1366x768-dark:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":1366,\"h\":769,\"dpr\":2,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-palette:1366x768-dark",
+      "status": "PASS",
+      "evidence": "{\"opened\":true,\"hscroll\":false,\"w\":1366,\"h\":769,\"dpr\":2,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-home:800x600-light:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":632,\"h\":435,\"dpr\":2,\"bad\":[],\"bodyBg\":\"rgb(245, 245, 247)\"}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-theme-follows-system:light",
+      "status": "PASS",
+      "evidence": "{\"dom\":\"light\",\"bodyBg\":\"rgb(245, 245, 247)\"}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-merge:800x600-light:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":632,\"h\":435,\"dpr\":2,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-palette:800x600-light",
+      "status": "PASS",
+      "evidence": "{\"opened\":true,\"hscroll\":false,\"w\":632,\"h\":435,\"dpr\":2,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-home:800x600-dark:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":632,\"h\":435,\"dpr\":2,\"bad\":[],\"bodyBg\":\"rgb(23, 24, 27)\"}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-theme-follows-system:dark",
+      "status": "PASS",
+      "evidence": "{\"dom\":\"dark\",\"bodyBg\":\"rgb(23, 24, 27)\"}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-merge:800x600-dark:no-overflow",
+      "status": "PASS",
+      "evidence": "{\"hscroll\":false,\"w\":632,\"h\":435,\"dpr\":2,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "visual:s2-palette:800x600-dark",
+      "status": "PASS",
+      "evidence": "{\"opened\":true,\"hscroll\":false,\"w\":632,\"h\":435,\"dpr\":2,\"bad\":[]}"
+    },
+    {
+      "suite": "visual-s2",
+      "id": "zz-main-process-errors",
+      "status": "PASS",
+      "evidence": ""
+    }
+  ],
+  "metrics": {
+    "large-merge-216MB+small": {
+      "note": "FAIL: renderer process-gone reason=oom on clicking Merge with a 212MB + small PDF (second run); first run raced with load and showed 'No files or pages selected to merge'",
+      "inputMB": 212
+    },
+    "large-compress-216MB": {
+      "loadMs": 1282,
+      "processMs": 28465,
+      "peakWorkingSetMB": 2539,
+      "maxUiGapMs": 84,
+      "inputMB": 212,
+      "outputMB": 31.5,
+      "outPages": 36
+    },
+    "merge-1000-pages": {
+      "processMs": 512,
+      "peakWorkingSetMB": 1697,
+      "maxUiGapMs": 56,
+      "outPages": 1003
+    },
+    "split-1000-pages": {
+      "processMs": 515,
+      "peakWorkingSetMB": 975,
+      "maxUiGapMs": 69,
+      "outPages": 500
+    },
+    "open-with-216MB": {
+      "peakWorkingSetMB": 1916,
+      "ms": 15160
+    }
+  },
+  "consoleErrors": {
+    "large": ["Error: No PDF document loaded."],
+    "open": [
+      "Error loading PDFs: [object Object]",
+      "Because of error Pdf.PDFError(\"Could not read PDF header whilst reading file bytes at position 1032\"), will read as malformed.",
+      "Attempting to reconstruct the malformed pdf bytes...",
+      "list length 0",
+      "ERROR: fromMemory: Pdf.PDFError(\"Failed to read PDF - initial error was\\nPdf.PDFError(\\\"Could not read PDF header whilst reading file bytes at position 1032\\\")\\n\\nfinal error was \\nPdf.PDFError(\\\"Could not read PDF header whilst reading file bytes at position 1032\\\")\\n\\n whilst reading file bytes at",
+      "Worker merge error: Unknown error during merge",
+      "couldn't lex object number",
+      "Because of error Pdf.PDFError(\"Bad xref stream whilst reading file bytes at position 1\"), will read as malformed.",
+      "Read 3 objects",
+      "Malformed PDF reconstruction succeeded!"
+    ],
+    "tools": [
+      "Estimating resolution as 427",
+      "Estimating resolution as 428",
+      "this.program: -accessibility=n is ignored for modern encryption formats",
+      "ERROR: decryptPdf: Failure(\"decrypt_pdf_inner\")",
+      "ERROR: decryptPdfOwner: Failure(\"decrypt_pdf_owner\")",
+      "Error during PDF decryption: Error: CoherentPDF: Failure(\"decrypt_pdf_owner\")\nPyMuPDF: Invalid PDF password.",
+      "Uncaught EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self' 'wasm-unsafe-eval'\".\n"
+    ]
+  }
+}

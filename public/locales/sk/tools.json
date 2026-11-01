@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSD do PDF",
-    "subtitle": "Previesť súbory Adobe Photoshop (PSD) do formátu PDF. Podporuje viacero súborov.",
+    "subtitle": "Previesť súbory PSD do formátu PDF. Podporuje viacero súborov.",
     "acceptedFormats": "PSD súbory",
     "convertButton": "Previesť do PDF"
   },

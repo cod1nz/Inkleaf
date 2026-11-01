@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSD به PDF",
-    "subtitle": "فایل‌های Adobe Photoshop (PSD) را به قالب PDF تبدیل کنید. از چند فایل پشتیبانی می‌شود.",
+    "subtitle": "فایل‌های PSD را به قالب PDF تبدیل کنید. از چند فایل پشتیبانی می‌شود.",
     "acceptedFormats": "فایل‌های PSD",
     "convertButton": "تبدیل به PDF"
   },

@@ -4,7 +4,11 @@
   "version": "2.8.11",
   "license": "AGPL-3.0-only",
   "type": "module",
+  "main": "electron/main.js",
   "scripts": {
+    "desktop:dev": "electron . --dev",
+    "desktop:build:web": "npm run build:desktop",
+    "desktop:start": "electron .",
     "predev": "node scripts/generate-blog.mjs && node scripts/generate-static-tool-links.mjs",
     "dev": "vite",
     "build": "node scripts/generate-blog.mjs && node scripts/generate-static-tool-links.mjs && tsc && vite build && node scripts/enhance-seo-pages.mjs && NODE_OPTIONS='--max-old-space-size=3072' node scripts/generate-i18n-pages.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-security-headers.mjs && node scripts/apply-indexing-policy.mjs && node scripts/compress-static-assets.mjs && node scripts/seo-audit.mjs",
@@ -40,7 +44,13 @@
     "security:codeql:quick": "codeql database analyze ./codeql-db --format=csv --output=codeql-results.csv --threads=0 codeql/javascript-queries:codeql-suites/javascript-security-extended.qls",
     "security:patterns": "node scripts/security-patterns-check.mjs",
     "security:audit": "npm audit --audit-level=high && npm run lint:security && npm run security:patterns",
-    "prepare": "husky"
+    "prepare": "husky",
+    "desktop:assets": "node scripts/desktop-assets.mjs",
+    "build:desktop": "node scripts/desktop-assets.mjs && node scripts/gen-notices.mjs && tsc && cross-env DESKTOP=true vite build",
+    "dist:win": "npm run build:desktop && electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:dir": "electron-builder --dir",
+    "size:check": "node scripts/check-installer-size.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -53,6 +63,9 @@
     "@vitejs/plugin-basic-ssl": "^2.1.4",
     "@vitest/coverage-v8": "^4.0.18",
     "@vitest/ui": "^4.0.18",
+    "cross-env": "^10.1.0",
+    "electron": "^45.2.1",
+    "electron-builder": "^26.18.0",
     "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-no-unsanitized": "^4.1.5",
@@ -126,7 +139,7 @@
     "markdown-it-table-of-contents": "^1.2.0",
     "mermaid": "^12.2.0",
     "microdiff": "^1.5.0",
-    "node-forge": "^1.4.0",
+    "node-forge": "^1.4.2",
     "papaparse": "^5.5.3",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^5.4.624",
@@ -160,12 +173,17 @@
   },
   "overrides": {
     "uuid": "^14",
-    "node-forge": "^1.4.0",
+    "node-forge": "^1.4.2",
     "flatted": "^3.4.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "lodash-es": "^4.18.1",
     "follow-redirects": "^1.15.11",
     "esbuild": "^0.25.0"
-  }
+  },
+  "description": "Inkleaf: an offline desktop PDF toolkit",
+  "author": {
+    "name": "Inkleaf contributors"
+  },
+  "homepage": "https://github.com/st1ne/Inkleaf"
 }

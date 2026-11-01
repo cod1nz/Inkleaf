@@ -158,62 +158,108 @@ export const languageToFontFamily: Record<string, string> = {
   uig: 'Noto Sans',
 };
 
-export const fontFamilyToUrl: Record<string, string> = {
-  'Noto Sans JP':
-    'https://rawcdn.githack.com/googlefonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/OTF/Japanese/NotoSansCJKjp-Regular.otf',
-  'Noto Sans SC':
-    'https://rawcdn.githack.com/googlefonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf',
-  'Noto Sans TC':
-    'https://rawcdn.githack.com/googlefonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/OTF/TraditionalChinese/NotoSansCJKtc-Regular.otf',
-  'Noto Sans KR':
-    'https://rawcdn.githack.com/googlefonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/OTF/Korean/NotoSansCJKkr-Regular.otf',
-  'Noto Naskh Arabic':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoNaskhArabic/NotoNaskhArabic-Regular.ttf',
-  'Noto Sans Devanagari':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/unhinted/ttf/NotoSansDevanagari/NotoSansDevanagari-Regular.ttf',
-  'Noto Sans Bengali':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansBengali/NotoSansBengali-Regular.ttf',
-  'Noto Sans Gujarati':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansGujarati/NotoSansGujarati-Regular.ttf',
-  'Noto Sans Kannada':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansKannada/NotoSansKannada-Regular.ttf',
-  'Noto Sans Malayalam':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansMalayalam/NotoSansMalayalam-Regular.ttf',
-  'Noto Sans Oriya':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansOriya/NotoSansOriya-Regular.ttf',
-  'Noto Sans Gurmukhi':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansGurmukhi/NotoSansGurmukhi-Regular.ttf',
-  'Noto Sans Tamil':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansTamil/NotoSansTamil-Regular.ttf',
-  'Noto Sans Telugu':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansTelugu/NotoSansTelugu-Regular.ttf',
-  'Noto Sans Sinhala':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansSinhala/NotoSansSinhala-Regular.ttf',
-  'Noto Sans Thai':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansThai/NotoSansThai-Regular.ttf',
-  'Noto Sans Khmer':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansKhmer/NotoSansKhmer-Regular.ttf',
-  'Noto Sans Lao':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansLao/NotoSansLao-Regular.ttf',
-  'Noto Sans Myanmar':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansMyanmar/NotoSansMyanmar-Regular.ttf',
-  'Noto Sans Hebrew':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansHebrew/NotoSansHebrew-Regular.ttf',
-  'Noto Sans Georgian':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansGeorgian/NotoSansGeorgian-Regular.ttf',
-  'Noto Sans Ethiopic':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansEthiopic/NotoSansEthiopic-Regular.ttf',
-  'Noto Serif Tibetan':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSerifTibetan/NotoSerifTibetan-Regular.ttf',
-  'Noto Sans Cherokee':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansCherokee/NotoSansCherokee-Regular.ttf',
-  'Noto Sans Armenian':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansArmenian/NotoSansArmenian-Regular.ttf',
-  'Noto Sans Syriac':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansSyriac/NotoSansSyriac-Regular.ttf',
-  'Noto Sans':
-    'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSans/NotoSans-Regular.ttf',
+// Replaced at build time by vite `define`; guarded so unit tests (which
+// use vitest.config.ts) still run in web mode.
+const IS_DESKTOP = typeof __DESKTOP__ !== 'undefined' && __DESKTOP__;
+// Desktop build: fonts are bundled by scripts/desktop-assets.mjs into
+// public/fonts/ocr/ and served same-origin; the remote table below is
+// dead-code-eliminated when IS_DESKTOP is true.
+const desktopFontFiles: Record<string, string> = {
+  'Noto Sans JP': 'NotoSansCJKjp-Regular.otf',
+  'Noto Sans SC': 'NotoSansCJKsc-Regular.otf',
+  'Noto Sans TC': 'NotoSansCJKtc-Regular.otf',
+  'Noto Sans KR': 'NotoSansCJKkr-Regular.otf',
+  'Noto Naskh Arabic': 'NotoNaskhArabic-Regular.ttf',
+  'Noto Sans Devanagari': 'NotoSansDevanagari-Regular.ttf',
+  'Noto Sans Bengali': 'NotoSansBengali-Regular.ttf',
+  'Noto Sans Gujarati': 'NotoSansGujarati-Regular.ttf',
+  'Noto Sans Kannada': 'NotoSansKannada-Regular.ttf',
+  'Noto Sans Malayalam': 'NotoSansMalayalam-Regular.ttf',
+  'Noto Sans Oriya': 'NotoSansOriya-Regular.ttf',
+  'Noto Sans Gurmukhi': 'NotoSansGurmukhi-Regular.ttf',
+  'Noto Sans Tamil': 'NotoSansTamil-Regular.ttf',
+  'Noto Sans Telugu': 'NotoSansTelugu-Regular.ttf',
+  'Noto Sans Sinhala': 'NotoSansSinhala-Regular.ttf',
+  'Noto Sans Thai': 'NotoSansThai-Regular.ttf',
+  'Noto Sans Khmer': 'NotoSansKhmer-Regular.ttf',
+  'Noto Sans Lao': 'NotoSansLao-Regular.ttf',
+  'Noto Sans Myanmar': 'NotoSansMyanmar-Regular.ttf',
+  'Noto Sans Hebrew': 'NotoSansHebrew-Regular.ttf',
+  'Noto Sans Georgian': 'NotoSansGeorgian-Regular.ttf',
+  'Noto Sans Ethiopic': 'NotoSansEthiopic-Regular.ttf',
+  'Noto Serif Tibetan': 'NotoSerifTibetan-Regular.ttf',
+  'Noto Sans Cherokee': 'NotoSansCherokee-Regular.ttf',
+  'Noto Sans Armenian': 'NotoSansArmenian-Regular.ttf',
+  'Noto Sans Syriac': 'NotoSansSyriac-Regular.ttf',
+  'Noto Sans': 'NotoSans-Regular.ttf',
 };
+
+function desktopFontUrls(): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [family, file] of Object.entries(desktopFontFiles)) {
+    out[family] = `/fonts/ocr/${file}`;
+  }
+  return out;
+}
+
+export const fontFamilyToUrl: Record<string, string> = IS_DESKTOP
+  ? desktopFontUrls()
+  : {
+      'Noto Sans JP':
+        'https://rawcdn.githack.com/googlefonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/OTF/Japanese/NotoSansCJKjp-Regular.otf',
+      'Noto Sans SC':
+        'https://rawcdn.githack.com/googlefonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf',
+      'Noto Sans TC':
+        'https://rawcdn.githack.com/googlefonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/OTF/TraditionalChinese/NotoSansCJKtc-Regular.otf',
+      'Noto Sans KR':
+        'https://rawcdn.githack.com/googlefonts/noto-cjk/f8d157532fbfaeda587e826d4cd5b21a49186f7c/Sans/OTF/Korean/NotoSansCJKkr-Regular.otf',
+      'Noto Naskh Arabic':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoNaskhArabic/NotoNaskhArabic-Regular.ttf',
+      'Noto Sans Devanagari':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/unhinted/ttf/NotoSansDevanagari/NotoSansDevanagari-Regular.ttf',
+      'Noto Sans Bengali':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansBengali/NotoSansBengali-Regular.ttf',
+      'Noto Sans Gujarati':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansGujarati/NotoSansGujarati-Regular.ttf',
+      'Noto Sans Kannada':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansKannada/NotoSansKannada-Regular.ttf',
+      'Noto Sans Malayalam':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansMalayalam/NotoSansMalayalam-Regular.ttf',
+      'Noto Sans Oriya':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansOriya/NotoSansOriya-Regular.ttf',
+      'Noto Sans Gurmukhi':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansGurmukhi/NotoSansGurmukhi-Regular.ttf',
+      'Noto Sans Tamil':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansTamil/NotoSansTamil-Regular.ttf',
+      'Noto Sans Telugu':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansTelugu/NotoSansTelugu-Regular.ttf',
+      'Noto Sans Sinhala':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansSinhala/NotoSansSinhala-Regular.ttf',
+      'Noto Sans Thai':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansThai/NotoSansThai-Regular.ttf',
+      'Noto Sans Khmer':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansKhmer/NotoSansKhmer-Regular.ttf',
+      'Noto Sans Lao':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansLao/NotoSansLao-Regular.ttf',
+      'Noto Sans Myanmar':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansMyanmar/NotoSansMyanmar-Regular.ttf',
+      'Noto Sans Hebrew':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansHebrew/NotoSansHebrew-Regular.ttf',
+      'Noto Sans Georgian':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansGeorgian/NotoSansGeorgian-Regular.ttf',
+      'Noto Sans Ethiopic':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansEthiopic/NotoSansEthiopic-Regular.ttf',
+      'Noto Serif Tibetan':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSerifTibetan/NotoSerifTibetan-Regular.ttf',
+      'Noto Sans Cherokee':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansCherokee/NotoSansCherokee-Regular.ttf',
+      'Noto Sans Armenian':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansArmenian/NotoSansArmenian-Regular.ttf',
+      'Noto Sans Syriac':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSansSyriac/NotoSansSyriac-Regular.ttf',
+      'Noto Sans':
+        'https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSans/NotoSans-Regular.ttf',
+    };
 
 export function getFontUrlForFamily(fontFamily: string): string {
   return fontFamilyToUrl[fontFamily] || fontFamilyToUrl['Noto Sans'];

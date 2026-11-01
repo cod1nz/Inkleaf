@@ -90,7 +90,7 @@
     "pageCount": 1
   },
   "008cedb36706": {
-    "text": "Can I convert other Photoshop or image formats here? <1/>",
+    "text": "Can I convert other image formats here? <1/>",
     "tags": [
       "summary"
     ],
@@ -2040,7 +2040,7 @@
     "pageCount": 1
   },
   "0a69a40738bf": {
-    "text": "The output is standard SVG that opens in Inkscape, Illustrator, Figma, and any web browser. Shapes, paths, and text outlines arrive as editable vector objects, while photos embedded in the PDF stay as raster images inside the file.",
+    "text": "The output is standard SVG that opens in Inkscape, Figma, and any web browser. Shapes, paths, and text outlines arrive as editable vector objects, while photos embedded in the PDF stay as raster images inside the file.",
     "tags": [
       "p"
     ],
@@ -2301,7 +2301,7 @@
     "pageCount": 1
   },
   "0b7c5902aeb0": {
-    "text": "The tool writes to the document info dictionary. Some PDFs also carry an XMP metadata stream, and readers like Acrobat prefer XMP when both exist, so the old title can still appear there. Run <1>Remove Metadata</1> first, then edit, to avoid the conflict.",
+    "text": "The tool writes to the document info dictionary. Some PDFs also carry an XMP metadata stream, and readers like many PDF viewers prefer XMP when both exist, so the old title can still appear there. Run <1>Remove Metadata</1> first, then edit, to avoid the conflict.",
     "tags": [
       "p"
     ],
@@ -2665,7 +2665,7 @@
     "pageCount": 2
   },
   "0e498a2b5dfd": {
-    "text": "Can I edit the result in Illustrator or Inkscape? <1/>",
+    "text": "Can I edit the result in Inkscape or other vector editors? <1/>",
     "tags": [
       "summary"
     ],
@@ -5234,7 +5234,7 @@
     "pageCount": 1
   },
   "1e1a73462a5f": {
-    "text": "Will the changes show in Acrobat and other viewers? <1/>",
+    "text": "Will the changes show in PDF readers and other viewers? <1/>",
     "tags": [
       "summary"
     ],
@@ -7250,7 +7250,7 @@
     "pageCount": 1
   },
   "2a1d523693a8": {
-    "text": "I changed the title but Acrobat still shows the old one. Why? <1/>",
+    "text": "I changed the title but my PDF reader still shows the old one. Why? <1/>",
     "tags": [
       "summary"
     ],
@@ -7995,7 +7995,7 @@
     "pageCount": 1
   },
   "2feb46402666": {
-    "text": "Convert Adobe Photoshop (PSD) files to PDF. Multiple files supported.",
+    "text": "Convert PSD files to PDF. Multiple files supported.",
     "tags": [
       "p"
     ],
@@ -9194,7 +9194,7 @@
     "pageCount": 1
   },
   "36e9e95e598a": {
-    "text": "University thesis submission systems, conference paper uploads, and many procurement portals cap files at 2MB. Documents exported from Word or Google Docs almost always fit at the Low level; for InDesign or Canva exports with full-resolution imagery, the 2 MB target lowers image quality only as far as it has to.",
+    "text": "University thesis submission systems, conference paper uploads, and many procurement portals cap files at 2MB. Documents exported from Word or Google Docs almost always fit at the Low level; for desktop publishing or Canva exports with full-resolution imagery, the 2 MB target lowers image quality only as far as it has to.",
     "tags": [
       "p"
     ],
@@ -12865,7 +12865,7 @@
     "pageCount": 1
   },
   "4cec8e547c65": {
-    "text": "Photoshop",
+    "text": "PSD",
     "tags": [
       "p"
     ],
@@ -15726,7 +15726,7 @@
     "pageCount": 1
   },
   "5cf3d59d4ebd": {
-    "text": "The document info fields (Title, Author, Subject, Keywords, Creator, Producer, and the creation and modification dates), the XMP metadata stream, the document ID pair in the trailer, and application-specific PieceInfo left behind by tools like Illustrator or InDesign. There are no options; it always clears all of these.",
+    "text": "The document info fields (Title, Author, Subject, Keywords, Creator, Producer, and the creation and modification dates), the XMP metadata stream, the document ID pair in the trailer, and application-specific PieceInfo left behind by design tools. There are no options; it always clears all of these.",
     "tags": [
       "p"
     ],
@@ -16925,7 +16925,7 @@
     "pageCount": 1
   },
   "648aa5f04d5e": {
-    "text": "Open the signature panel in Adobe Acrobat Reader or another signature-aware viewer; the timestamp is listed there with its time and the authority that issued it. If the reader trusts the TSA's certificate chain, it reports the timestamp as valid.",
+    "text": "Open the signature panel in a PDF reader or another signature-aware viewer; the timestamp is listed there with its time and the authority that issued it. If the reader trusts the TSA's certificate chain, it reports the timestamp as valid.",
     "tags": [
       "p"
     ],
@@ -18879,7 +18879,7 @@
     "pageCount": 1
   },
   "707048afa8b5": {
-    "text": "Will my annotations show up in Acrobat, Preview, or Chrome? <1/>",
+    "text": "Will my annotations show up in PDF readers, Preview, or Chrome? <1/>",
     "tags": [
       "summary"
     ],
@@ -19432,7 +19432,7 @@
     "pageCount": 1
   },
   "73c1ce173ea6": {
-    "text": "Why does Adobe Reader say the signature validity is unknown? <1/>",
+    "text": "Why does my PDF reader say the signature validity is unknown? <1/>",
     "tags": [
       "summary"
     ],
@@ -20199,7 +20199,7 @@
     "pageCount": 2
   },
   "77d85aed34b7": {
-    "text": "Convert Adobe Photoshop (PSD) files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser.",
+    "text": "Convert PSD files to PDF format. Supports multiple files. Free, no uploads, no signup. Runs entirely in your browser.",
     "tags": [
       "meta"
     ],
@@ -20912,7 +20912,7 @@
     "pageCount": 1
   },
   "7c4fe33a2249": {
-    "text": "Any current PDF reader, including Adobe Reader, Preview, Chrome, Firefox, and Edge, opens AES-256 encrypted files. Very old readers released before AES-256 support was added may refuse the file.",
+    "text": "Any current PDF reader, including Preview, Chrome, Firefox, and Edge, opens AES-256 encrypted files. Very old readers released before AES-256 support was added may refuse the file.",
     "tags": [
       "p"
     ],
@@ -21317,7 +21317,7 @@
     "pageCount": 1
   },
   "7ee877d70bb6": {
-    "text": "Look at the Creator field (the application that made the original document, such as Word or InDesign) and the Producer field (the library that wrote the PDF, such as Acrobat Distiller or a PDF engine). The XMP section usually repeats them as xmp:CreatorTool and pdf:Producer.",
+    "text": "Look at the Creator field (the application that made the original document, such as Word or a desktop publisher) and the Producer field (the library that wrote the PDF, such as a PDF distiller or a PDF engine). The XMP section usually repeats them as xmp:CreatorTool and pdf:Producer.",
     "tags": [
       "p"
     ],
@@ -22278,7 +22278,7 @@
     "pageCount": 1
   },
   "837eb48e8a88": {
-    "text": "No. The timestamp is invisible; it lives in the file's signature data and shows up in the signature panel of Acrobat and similar readers, not as a stamp on the page. The downloaded file keeps its original name.",
+    "text": "No. The timestamp is invisible; it lives in the file's signature data and shows up in the signature panel of most PDF readers, not as a stamp on the page. The downloaded file keeps its original name.",
     "tags": [
       "p"
     ],
@@ -22662,7 +22662,7 @@
     "pageCount": 1
   },
   "860d2a88930e": {
-    "text": "Fast Web View is Acrobat's name for linearization, and running the file through this tool sets it to Yes. That holds only if you don't edit the PDF again afterward, because almost any later change, such as merging, adding pages, or resaving from most editors, removes the linearization.",
+    "text": "Fast Web View is the name some PDF readers use for linearization, and running the file through this tool sets it to Yes. That holds only if you don't edit the PDF again afterward, because almost any later change, such as merging, adding pages, or resaving from most editors, removes the linearization.",
     "tags": [
       "p"
     ],
@@ -23631,7 +23631,7 @@
     "pageCount": 1
   },
   "8b2e477df171": {
-    "text": "The converter relies on the composite image Photoshop writes when Maximize Compatibility is on. If that option was off when the file was saved, the composite may be missing or stale; resave the PSD with Maximize Compatibility enabled and convert again.",
+    "text": "The converter relies on the composite image stored in the PSD when its compatibility option is on. If that option was off when the file was saved, the composite may be missing or stale; resave the PSD with the compatibility option enabled and convert again.",
     "tags": [
       "p"
     ],
@@ -24694,7 +24694,7 @@
     "pageCount": 1
   },
   "91ad65051625": {
-    "text": "Why are the dates shown differently from what Acrobat displays? <1/>",
+    "text": "Why are the dates shown differently from what a PDF reader displays? <1/>",
     "tags": [
       "summary"
     ],
@@ -25343,7 +25343,7 @@
     "pageCount": 1
   },
   "956e2366dd60": {
-    "text": "Open the downloaded PDF in a reader that displays page labels, such as Adobe Acrobat or Firefox's built-in viewer, and look at the page number box in the toolbar. It shows the label, for example iv or A-1, instead of the plain page index.",
+    "text": "Open the downloaded PDF in a reader that displays page labels, such as a PDF reader or Firefox's built-in viewer, and look at the page number box in the toolbar. It shows the label, for example iv or A-1, instead of the plain page index.",
     "tags": [
       "p"
     ],
@@ -26575,7 +26575,7 @@
     "pageCount": 1
   },
   "9bdf4ce25f5f": {
-    "text": "Valid means the signature was cryptographically verified, covers the whole file, and uses a secure digest. Invalid means verification ran and failed, for example because the bytes changed or the key doesn't match. Unverified means the signature uses an algorithm the tool can't check, such as Ed25519 or SM2, so confirm it in Adobe Acrobat or with openssl before relying on it.",
+    "text": "Valid means the signature was cryptographically verified, covers the whole file, and uses a secure digest. Invalid means verification ran and failed, for example because the bytes changed or the key doesn't match. Unverified means the signature uses an algorithm the tool can't check, such as Ed25519 or SM2, so confirm it in a PDF reader or with openssl before relying on it.",
     "tags": [
       "p"
     ],
@@ -29710,7 +29710,7 @@
     "pageCount": 1
   },
   "ad284c37fdba": {
-    "text": "Uncheck \"Allow Copying Text\" and \"Allow Printing\", enter a New Owner Password, and click Change Permissions. Adobe Reader and other compliant viewers will then block those actions. Some third-party tools ignore permission flags, so for sensitive material consider <1>rasterizing the pages</1> as well.",
+    "text": "Uncheck \"Allow Copying Text\" and \"Allow Printing\", enter a New Owner Password, and click Change Permissions. PDF readers and other compliant viewers will then block those actions. Some third-party tools ignore permission flags, so for sensitive material consider <1>rasterizing the pages</1> as well.",
     "tags": [
       "p"
     ],
@@ -29803,7 +29803,7 @@
     "pageCount": 1
   },
   "adadf0c89516": {
-    "text": "Button actions include Reset Form, Print Form, Open URL, Run JavaScript, and Show/Hide Field, which targets another field and can show, hide, or toggle it. They're stored as standard PDF actions, so they run in Acrobat and other viewers that support form scripting.",
+    "text": "Button actions include Reset Form, Print Form, Open URL, Run JavaScript, and Show/Hide Field, which targets another field and can show, hide, or toggle it. They're stored as standard PDF actions, so they run in PDF readers and other viewers that support form scripting.",
     "tags": [
       "p"
     ],
@@ -29963,7 +29963,7 @@
     "pageCount": 1
   },
   "ae80b610db2c": {
-    "text": "Files embedded inside the PDF, either at the document level (the paperclip panel in Acrobat) or attached to a specific page as a file attachment annotation. Images drawn on the page, fonts, and form data are not attachments; for pictures use <1>Extract Images</1>.",
+    "text": "Files embedded inside the PDF, either at the document level (the paperclip panel in most PDF readers) or attached to a specific page as a file attachment annotation. Images drawn on the page, fonts, and form data are not attachments; for pictures use <1>Extract Images</1>.",
     "tags": [
       "p"
     ],
@@ -36437,7 +36437,7 @@
     "pageCount": 5
   },
   "d416fdd50995": {
-    "text": "Do I need Photoshop installed? <1/>",
+    "text": "Do I need any other software installed? <1/>",
     "tags": [
       "summary"
     ],
@@ -37017,7 +37017,7 @@
     "pageCount": 1
   },
   "d7d8855e30a7": {
-    "text": "A barcode (QR Code, Code 128, Code 39, EAN-13, UPC-A, DataMatrix, or PDF417) is generated from the value you enter and drawn onto the page as a fixed image, so the person filling the form can't change it. The image field is a button that lets the user pick a picture from their computer, which works in Acrobat and other viewers that support image import.",
+    "text": "A barcode (QR Code, Code 128, Code 39, EAN-13, UPC-A, DataMatrix, or PDF417) is generated from the value you enter and drawn onto the page as a fixed image, so the person filling the form can't change it. The image field is a button that lets the user pick a picture from their computer, which works in PDF readers and other viewers that support image import.",
     "tags": [
       "p"
     ],
@@ -37088,7 +37088,7 @@
     "pageCount": 1
   },
   "d825f2fb8ef6": {
-    "text": "Sign PDF places a drawn, typed, or uploaded signature image on the page, with an option to flatten it so nobody can move or delete it later. <1>Digital Signature</1> applies a cryptographic signature with your own X.509 certificate (.pfx, .p12, or .pem), which proves who signed and that the file hasn't changed since, and Validate Signature checks signatures already in a file. Certificate signing may need an internet connection to fetch the certificate chain, and self-signed certificates will show warnings in Adobe Reader.",
+    "text": "Sign PDF places a drawn, typed, or uploaded signature image on the page, with an option to flatten it so nobody can move or delete it later. <1>Digital Signature</1> applies a cryptographic signature with your own X.509 certificate (.pfx, .p12, or .pem), which proves who signed and that the file hasn't changed since, and Validate Signature checks signatures already in a file. Certificate signing may need an internet connection to fetch the certificate chain, and self-signed certificates will show warnings in PDF reader.",
     "tags": [
       "p"
     ],
@@ -37350,7 +37350,7 @@
     "pageCount": 1
   },
   "da25efcd1706": {
-    "text": "The tool doesn't set one, but the output grows with every page you add: a 100-page document becomes a page roughly 100 pages tall. Some readers struggle with very large pages; Adobe Reader, for example, doesn't display pages larger than 200 inches on a side.",
+    "text": "The tool doesn't set one, but the output grows with every page you add: a 100-page document becomes a page roughly 100 pages tall. Some readers struggle with very large pages; one common reader, for example, doesn't display pages larger than 200 inches on a side.",
     "tags": [
       "p"
     ],
@@ -39730,7 +39730,7 @@
     "pageCount": 1
   },
   "e8ae13d197c4": {
-    "text": "PSD to PDF - Convert Photoshop Files to PDF - BentoPDF",
+    "text": "PSD to PDF - Convert PSD Files to PDF - BentoPDF",
     "tags": [
       "title"
     ],
@@ -39915,7 +39915,7 @@
     "pageCount": 1
   },
   "e982cefda0cd": {
-    "text": "In readers that have an attachments panel, such as Adobe Acrobat Reader or Firefox's built-in viewer, they're listed by file name and can be opened or saved from there. Viewers without that panel won't show them at all, although the files are still inside the PDF.",
+    "text": "In readers that have an attachments panel, such as a PDF reader or Firefox's built-in viewer, they're listed by file name and can be opened or saved from there. Viewers without that panel won't show them at all, although the files are still inside the PDF.",
     "tags": [
       "p"
     ],
@@ -41269,7 +41269,7 @@
     "pageCount": 1
   },
   "f1a77ecdeee2": {
-    "text": "Does this fix a PDF that shows Fast Web View: No in Acrobat? <1/>",
+    "text": "Does this fix a PDF that shows Fast Web View: No in a PDF reader? <1/>",
     "tags": [
       "summary"
     ],

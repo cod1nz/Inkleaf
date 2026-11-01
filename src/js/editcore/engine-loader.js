@@ -19,7 +19,12 @@ function resolveWasmUrl() {
   }
   const resolve = import.meta.resolve;
   if (typeof resolve !== 'function') return null;
-  return new URL(resolve('bentopdf-pdfium/editcore.wasm')).pathname;
+  // file URL -> fs path. On Windows pathname is "/C:/x", which emscripten then
+  // prefixes again ("C:\C:\..."); also decode %20 etc.
+  const p = decodeURIComponent(
+    new URL(resolve('bentopdf-pdfium/editcore.wasm')).pathname
+  );
+  return /^\/[A-Za-z]:[\/]/.test(p) ? p.slice(1) : p;
 }
 
 const wasmUrl = resolveWasmUrl();

@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSD у PDF",
-    "subtitle": "Канвертаваць файлы Adobe Photoshop (PSD) у PDF. Падтрымлівае некалькі файлаў.",
+    "subtitle": "Канвертаваць файлы PSD у PDF. Падтрымлівае некалькі файлаў.",
     "acceptedFormats": "файлы PSD",
     "convertButton": "Канвертаваць у PDF"
   },

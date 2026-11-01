@@ -6,6 +6,9 @@ import {
 
 import { trText } from '../i18n/i18n.js';
 
+// Replaced at build time by vite `define`; guarded so unit tests (which
+// use vitest.config.ts) still run in web mode.
+const IS_DESKTOP = typeof __DESKTOP__ !== 'undefined' && __DESKTOP__;
 const TESSERACT_ENV_KEYS = [
   'VITE_TESSERACT_WORKER_URL',
   'VITE_TESSERACT_CORE_URL',
@@ -49,9 +52,23 @@ function normalizeFileUrl(url?: string): string | undefined {
   return trimmed.replace(/\/+$/, '');
 }
 
+function localAssetUrl(path: string): string {
+  return typeof location !== 'undefined' && location.href
+    ? new URL(path, location.href).href
+    : path;
+}
+
 export function resolveTesseractAssetConfig(
   env: TesseractAssetEnv = getDefaultTesseractAssetEnv()
 ): TesseractAssetConfig {
+  if (IS_DESKTOP) {
+    // Desktop: bundled, same-origin, English only. Env overrides are ignored.
+    return {
+      workerPath: localAssetUrl('/tesseract/worker.min.js'),
+      corePath: localAssetUrl('/tesseract/core'),
+      langPath: localAssetUrl('/tesseract/lang'),
+    };
+  }
   return {
     workerPath: normalizeFileUrl(env.VITE_TESSERACT_WORKER_URL),
     corePath: normalizeDirectoryUrl(env.VITE_TESSERACT_CORE_URL),

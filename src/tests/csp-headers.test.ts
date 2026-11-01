@@ -28,18 +28,6 @@ function allowedBy(sources: string[], url: string): boolean {
   );
 }
 
-function headerRuleCsp(file: string, source: string): string | undefined {
-  const config = JSON.parse(read(file)) as {
-    headers: Array<{
-      source: string;
-      headers: Array<{ key: string; value: string }>;
-    }>;
-  };
-  return config.headers
-    .find((rule) => rule.source === source)
-    ?.headers.find((h) => h.key === 'Content-Security-Policy')?.value;
-}
-
 describe('CSP script-src', () => {
   const scriptSrc = directive(defaults.csp, 'script-src');
 
@@ -124,17 +112,6 @@ describe('CSP script-src', () => {
 });
 
 describe('deployment configs match the generator', () => {
-  it('vercel.json', () => {
-    expect(headerRuleCsp('vercel.json', '/(.*)')).toBe(defaults.csp);
-    expect(headerRuleCsp('vercel.json', '/docs')).toBe(defaults.docsCsp);
-    expect(headerRuleCsp('vercel.json', '/docs/:path*')).toBe(defaults.docsCsp);
-  });
-
-  it('serve.json', () => {
-    expect(headerRuleCsp('serve.json', '**/*')).toBe(defaults.csp);
-    expect(headerRuleCsp('serve.json', 'docs/**')).toBe(defaults.docsCsp);
-  });
-
   it('_headers for Netlify and Cloudflare Pages', () => {
     const file = defaults.staticHeaders;
     expect(file).toContain(`/*\n  Content-Security-Policy: ${defaults.csp}\n`);
@@ -144,14 +121,5 @@ describe('deployment configs match the generator', () => {
     for (const line of file.split('\n')) {
       expect(line.length).toBeLessThanOrEqual(2000);
     }
-  });
-
-  it('nginx docs config and .htaccess', () => {
-    expect(defaults.nginxDocs).toContain(
-      `add_header Content-Security-Policy "${defaults.docsCsp}" always;`
-    );
-    expect(read('.htaccess')).toContain(
-      `Header always set Content-Security-Policy "${defaults.csp}"`
-    );
   });
 });

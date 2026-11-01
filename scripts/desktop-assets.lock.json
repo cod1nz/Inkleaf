@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "artifacts": {
+    "pymupdf-wasm@0.11.16": {
+      "sha256": "cd093f8824761031cae51a5f4f7b47e34030e7a000e09030b7871a11a52e73a0",
+      "size": 40422880,
+      "source": "https://registry.npmjs.org/@bentopdf/pymupdf-wasm/-/pymupdf-wasm-0.11.16.tgz"
+    },
+    "gs-wasm@0.1.1": {
+      "sha256": "b6f60fa98798d422f9eee421134c158bb8840fb705b6f3e1a29bf1f9dcd983f3",
+      "size": 11108131,
+      "source": "https://registry.npmjs.org/@bentopdf/gs-wasm/-/gs-wasm-0.1.1.tgz"
+    },
+    "coherentpdf@2.5.5": {
+      "sha256": "5ab11947165b4e19111931f30593528f73253c09732f5f3deb4608fd524574de",
+      "size": 4385871,
+      "source": "https://registry.npmjs.org/coherentpdf/-/coherentpdf-2.5.5.tgz"
+    },
+    "tesseract.js@7.0.0": {
+      "sha256": "9a93bf51c3387f945d10a24bf8b3a4bf2e45c7c7161b8242aafbaf9d3c4b606a",
+      "size": 616435,
+      "source": "https://registry.npmjs.org/tesseract.js/-/tesseract.js-7.0.0.tgz"
+    },
+    "tesseract.js-core@7.0.0": {
+      "sha256": "ba584355515eaff877552022853c0e71f2cb70466e759d1d6940484929718ee0",
+      "size": 16935308,
+      "source": "https://registry.npmjs.org/tesseract.js-core/-/tesseract.js-core-7.0.0.tgz"
+    },
+    "tessdata-eng@4.0.0_best_int": {
+      "sha256": "45b4cb346724ac1774f1c36f42f182b887bcdb28ebe63e6fff90ac41f3fcff91",
+      "size": 2952873,
+      "source": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/eng/4.0.0_best_int/eng.traineddata.gz"
+    },
+    "ocr-font:NotoSans-Regular.ttf": {
+      "sha256": "b85c38ecea8a7cfb39c24e395a4007474fa5a4fc864f6ee33309eb4948d232d5",
+      "size": 569208,
+      "source": "https://rawcdn.githack.com/googlefonts/noto-fonts/ffebf8c1ee449e544955a7e813c54f9b73848eac/hinted/ttf/NotoSans/NotoSans-Regular.ttf"
+    },
+    "@embedpdf/fonts-jp@1.0.0": {
+      "sha256": "df8af067c031e5dea31dab7105bf01560cccfe007fe055d7d69b395fc1526b58",
+      "size": 27101289,
+      "source": "https://registry.npmjs.org/@embedpdf/fonts-jp/-/fonts-jp-1.0.0.tgz"
+    },
+    "@embedpdf/fonts-kr@1.0.0": {
+      "sha256": "c6e93dac723b37c743af2007fb3e18ac9ce8dce10f65beb100b3c8327571fcec",
+      "size": 25473302,
+      "source": "https://registry.npmjs.org/@embedpdf/fonts-kr/-/fonts-kr-1.0.0.tgz"
+    },
+    "@embedpdf/fonts-sc@1.0.0": {
+      "sha256": "589e6a5f2168430b4ae5a46bfdc4606f1798f5c06be5a2369ab89f75b804a0ad",
+      "size": 36514660,
+      "source": "https://registry.npmjs.org/@embedpdf/fonts-sc/-/fonts-sc-1.0.0.tgz"
+    },
+    "@embedpdf/fonts-tc@1.0.0": {
+      "sha256": "3627a6a23f0cb07dca9a72db07e2e47afb15b934b850529367458b64b322e8a4",
+      "size": 34078976,
+      "source": "https://registry.npmjs.org/@embedpdf/fonts-tc/-/fonts-tc-1.0.0.tgz"
+    },
+    "@embedpdf/fonts-arabic@1.0.0": {
+      "sha256": "6877696b89128ba8c488c96456f80dc0a5154d6ea9530148e0ba515fb6b88046",
+      "size": 151443,
+      "source": "https://registry.npmjs.org/@embedpdf/fonts-arabic/-/fonts-arabic-1.0.0.tgz"
+    },
+    "@embedpdf/fonts-hebrew@1.0.0": {
+      "sha256": "af0780c63bf2058337fddce3059722811f992137e66537383881a0da3923aac2",
+      "size": 23659,
+      "source": "https://registry.npmjs.org/@embedpdf/fonts-hebrew/-/fonts-hebrew-1.0.0.tgz"
+    },
+    "@embedpdf/fonts-latin@1.0.0": {
+      "sha256": "474d091abd00f943422546462277ad3a3f29fdb4f44019a575888d5d8b763f18",
+      "size": 5623839,
+      "source": "https://registry.npmjs.org/@embedpdf/fonts-latin/-/fonts-latin-1.0.0.tgz"
+    }
+  }
+}

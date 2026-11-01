@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSD naar PDF",
-    "subtitle": "Converteer Adobe Photoshop (PSD) bestanden naar PDF-formaat. Ondersteunt meerdere bestanden.",
+    "subtitle": "Converteer PSD bestanden naar PDF-formaat. Ondersteunt meerdere bestanden.",
     "acceptedFormats": "PSD-bestanden",
     "convertButton": "Omzetten naar PDF"
   },

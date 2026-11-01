@@ -1,0 +1,254 @@
+/* Makes the web tool pages sit inside the shell without editing them.
+   Everything is scoped to html[data-desktop]. */
+
+/* ---- fonts: system stack only ---- */
+html[data-desktop] {
+  --font-sans: var(--dk-font);
+}
+html[data-desktop] body,
+html[data-desktop] button,
+html[data-desktop] input,
+html[data-desktop] select,
+html[data-desktop] textarea {
+  font-family: var(--dk-font);
+}
+
+/* ---- remap the pages' hard-coded dark palette onto shell tokens ----
+   Tailwind v4 emits utilities as var(--color-gray-*), so overriding the
+   variables re-themes every tool page in both light and dark. */
+html[data-desktop] {
+  --color-gray-900: var(--dk-canvas);
+  --color-gray-800: var(--dk-panel);
+  --color-gray-700: var(--dk-g700);
+  --color-gray-600: var(--dk-g600);
+  --color-gray-500: var(--dk-g500);
+  --color-gray-400: var(--dk-g400);
+  --color-gray-300: var(--dk-g300);
+  --color-gray-200: var(--dk-g200);
+  --color-gray-100: var(--dk-g100);
+  --color-gray-50: var(--dk-g50);
+  --color-indigo-300: var(--dk-ind300);
+  --color-indigo-400: var(--dk-ind400);
+  --color-indigo-500: #5256ee; /* white label on indigo buttons: >= 4.5:1 */
+  --color-indigo-600: #4f46e5;
+  --color-indigo-700: #4338ca;
+  --color-orange-600: #c2410c;
+  --color-blue-500: #2563eb;
+  --color-blue-600: #1d4ed8;
+}
+
+/* Light theme: pages use text-white for headings on dark cards. Invert those
+   (but not text on coloured buttons/badges). */
+html[data-theme-effective='light']
+  .text-white:not(
+    :is(
+      [class*='bg-indigo'],
+      [class*='bg-green'],
+      [class*='bg-red'],
+      [class*='bg-blue'],
+      [class*='bg-purple'],
+      [class*='bg-orange'],
+      [class*='bg-yellow'],
+      [class*='bg-amber'],
+      [class*='bg-teal'],
+      [class*='bg-emerald'],
+      [class*='bg-rose'],
+      [class*='bg-cyan'],
+      [class*='bg-pink'],
+      [class*='bg-sky'],
+      [class*='bg-violet'],
+      [class*='bg-lime'],
+      [class*='bg-fuchsia'],
+      [class*='bg-black'],
+      [class*='from-']
+    ),
+    :is(
+        [class*='bg-indigo'],
+        [class*='bg-green'],
+        [class*='bg-red'],
+        [class*='bg-blue'],
+        [class*='bg-purple'],
+        [class*='bg-orange'],
+        [class*='bg-yellow'],
+        [class*='bg-amber'],
+        [class*='bg-teal'],
+        [class*='bg-emerald'],
+        [class*='bg-rose'],
+        [class*='bg-cyan'],
+        [class*='bg-pink'],
+        [class*='bg-sky'],
+        [class*='bg-violet'],
+        [class*='bg-lime'],
+        [class*='bg-fuchsia'],
+        [class*='bg-black'],
+        [class*='from-']
+      )
+      *
+  ) {
+  color: var(--dk-text);
+}
+html[data-theme-effective='light'] {
+  /* Status colours need more weight on light surfaces to stay legible. */
+  --color-green-400: #15803d;
+  --color-red-400: #b91c1c;
+  --color-yellow-400: #a16207;
+  --color-orange-400: #c2410c;
+  --color-blue-400: #1d4ed8;
+  --color-purple-400: #7e22ce;
+  --color-amber-400: #a16207;
+  --color-emerald-400: #047857;
+  --color-teal-400: #0f766e;
+  --color-cyan-400: #0e7490;
+}
+
+/* Light surfaces: pale 200/300 shades (meant for dark panels) become readable text. */
+html[data-theme-effective='light'] {
+  --color-blue-300: #1d4ed8;
+  --color-blue-200: #1d4ed8;
+  --color-amber-300: #92400e;
+  --color-amber-200: #92400e;
+  --color-yellow-300: #854d0e;
+  --color-yellow-200: #854d0e;
+  --color-green-300: #166534;
+  --color-green-200: #166534;
+  --color-red-300: #991b1b;
+  --color-red-200: #991b1b;
+  --color-orange-300: #9a3412;
+  --color-orange-200: #9a3412;
+  --color-purple-300: #6b21a8;
+  --color-purple-200: #6b21a8;
+  --color-teal-300: #115e59;
+  --color-teal-200: #115e59;
+  --color-cyan-300: #155e75;
+  --color-cyan-200: #155e75;
+  --color-emerald-300: #065f46;
+  --color-emerald-200: #065f46;
+  --color-pink-300: #9d174d;
+  --color-pink-200: #9d174d;
+  --color-sky-300: #075985;
+  --color-sky-200: #075985;
+  --color-violet-300: #5b21b6;
+  --color-violet-200: #5b21b6;
+  --color-rose-300: #9f1239;
+  --color-rose-200: #9f1239;
+  --color-lime-300: #3f6212;
+  --color-lime-200: #3f6212;
+}
+
+/* ---- neutralize web chrome ---- */
+html[data-desktop] nav[data-simple-nav],
+html[data-desktop] footer[data-simple-footer],
+html[data-desktop] .dk-main > nav,
+html[data-desktop] .dk-main > footer,
+html[data-desktop] .dk-main > section,
+html[data-desktop] #language-banner,
+html[data-desktop] .language-banner,
+html[data-desktop] #simple-mode-lang-switcher,
+html[data-desktop] [id^='back-to-tools'],
+html[data-desktop] #back-to-grid {
+  display: none !important;
+}
+
+/* Marketing blocks that some pages nest inside wrappers */
+html[data-desktop] .dk-main [data-i18n^='howTo'],
+html[data-desktop] .dk-main [id='faq'],
+html[data-desktop] .dk-main [id='related-tools'] {
+  display: none !important;
+}
+
+/* ---- sizing: pages assume the window is the viewport ---- */
+html[data-desktop] .dk-main .min-h-screen {
+  min-height: 100%;
+}
+html[data-desktop] .dk-main .h-screen {
+  height: 100%;
+}
+html[data-desktop] .dk-main .max-h-screen {
+  max-height: 100%;
+}
+html[data-desktop] .dk-main #uploader {
+  padding-top: 28px;
+  padding-bottom: 28px;
+  background: transparent;
+}
+
+html[data-desktop] .dk-main[data-body-flex] {
+  display: flex;
+  flex-direction: column;
+}
+html[data-desktop] .dk-main[data-body-clip] {
+  overflow: hidden;
+}
+
+/* Tool cards: same panel language as the shell */
+html[data-desktop] .dk-main #tool-uploader {
+  border-color: var(--dk-hairline);
+  border-radius: var(--dk-r-dialog);
+  box-shadow: var(--dk-shadow-card);
+}
+html[data-desktop] .dk-main #tool-uploader > h1 {
+  font-size: var(--dk-fs-xl);
+  letter-spacing: -0.012em;
+}
+
+/* Tool drop zones: calmer dashed hairline, accent on hover */
+html[data-desktop] .dk-main #drop-zone {
+  border-width: 1.5px;
+  border-color: var(--dk-hairline-strong);
+  border-radius: var(--dk-r-panel);
+  background: var(--dk-canvas);
+  transition:
+    border-color var(--dk-t-base) var(--dk-ease),
+    background-color var(--dk-t-base) var(--dk-ease);
+}
+html[data-desktop] .dk-main #drop-zone:hover {
+  border-color: var(--dk-accent);
+  background: var(--dk-accent-wash);
+}
+
+/* Hard-coded dark panels in the shared page stylesheet */
+html[data-desktop] .dk-main .faq-d,
+html[data-desktop] .dk-main .tool-card {
+  background-color: var(--dk-panel);
+  border-color: var(--dk-hairline);
+}
+html[data-desktop] .dk-main .faq-d-q {
+  color: var(--dk-text);
+}
+
+/* Pages designed light-on-white (bg-white cards with gray-700 text): give the
+   card its own gray scale so text and buttons stay legible in both themes. */
+html[data-desktop] .dk-main .bg-white {
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #6b7280;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  color: #1f2937;
+}
+html[data-theme-effective='dark'] .dk-main .bg-white {
+  background-color: var(--dk-panel);
+  color: var(--dk-text);
+  --color-gray-50: #26272c;
+  --color-gray-100: #2d2e34;
+  --color-gray-200: #3a3b43;
+  --color-gray-300: #4a4c55;
+  --color-gray-400: #a4a6ae;
+  --color-gray-500: #a4a6ae;
+  --color-gray-600: #c6c8ce;
+  --color-gray-700: #dcdee2;
+  --color-gray-800: #eceef0;
+  --color-gray-900: #f5f6f7;
+}
+
+/* Gray action buttons with white labels: keep them dark in the light theme. */
+html[data-theme-effective='light'] .dk-main button.bg-gray-700.text-white,
+html[data-theme-effective='light'] .dk-main button.bg-gray-600.text-white {
+  background-color: #4b5563;
+  color: #fff;
+}

@@ -106,6 +106,11 @@ function initializeTool() {
   };
 
   document.getElementById('close-tool-btn')?.addEventListener('click', () => {
+    // Desktop build: the launcher is /desktop.html (BASE_URL "/" would hit the app root route)
+    if (typeof __DESKTOP__ !== 'undefined' && __DESKTOP__) {
+      window.location.assign('/desktop.html');
+      return;
+    }
     window.location.href = import.meta.env.BASE_URL;
   });
   document.getElementById('upload-area')?.addEventListener('click', openPicker);

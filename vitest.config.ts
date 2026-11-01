@@ -2,6 +2,9 @@ import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 
 export default defineConfig({
+  define: {
+    __DESKTOP__: false,
+  },
   test: {
     // Enable global test APIs (describe, it, expect, etc.)
     globals: true,

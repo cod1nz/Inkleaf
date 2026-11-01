@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSD в PDF",
-    "subtitle": "Преобразовать файлы Adobe Photoshop (PSD) в формат PDF. Поддерживает несколько файлов.",
+    "subtitle": "Преобразовать файлы PSD в формат PDF. Поддерживает несколько файлов.",
     "acceptedFormats": "Файлы PSD",
     "convertButton": "Преобразовать в PDF"
   },

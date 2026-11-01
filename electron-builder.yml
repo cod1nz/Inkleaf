@@ -1,0 +1,116 @@
+# Inkleaf desktop packaging. No auto-update (PLAN D7), no publishing: artifacts land in release/.
+# TODO: replace the placeholder appId when a real reverse-DNS domain/org is chosen.
+appId: dev.inkleaf.desktop
+productName: Inkleaf
+copyright: Copyright (c) Inkleaf contributors. AGPL-3.0.
+directories:
+  output: release
+  buildResources: build
+publish: null
+npmRebuild: false
+nodeGypRebuild: false
+buildDependenciesFromSource: false
+compression: maximum
+asar: true
+# main/preload/protocol use only Node + Electron builtins, so no node_modules ship.
+files:
+  - package.json
+  - electron/**
+  - dist/**
+  - '!electron/__tests__/**'
+  - '!electron/README.md'
+  - '!**/node_modules/**'
+  - '!**/*.map'
+# protocol.js serves dist/ straight out of app.asar (fs is asar-aware, realRoots() also covers
+# app.asar.unpacked), so nothing has to be unpacked. Add globs here (e.g. dist/wasm/**) only if
+# a wasm/native asset ever needs a real file path.
+asarUnpack: []
+# Electron fuses (flipped in the binary at pack time, before signing). The app never needs ELECTRON_RUN_AS_NODE,
+# NODE_OPTIONS, --inspect or file://, and only ever loads its own app.asar, whose header hash is embedded and checked
+# at startup (macOS + Windows), so a local user/malware cannot swap in code without breaking the signature.
+electronFuses:
+  runAsNode: false
+  enableCookieEncryption: true
+  enableNodeOptionsEnvironmentVariable: false
+  enableNodeCliInspectArguments: false
+  enableEmbeddedAsarIntegrityValidation: true
+  onlyLoadAppFromAsar: true
+  loadBrowserProcessSpecificV8Snapshot: false
+  grantFileProtocolExtraPrivileges: false
+extraMetadata:
+  main: electron/main.js
+extraResources:
+  - from: LICENSE
+    to: LICENSE.txt
+# Keep en-US plus the app's supported locales (Chromium .pak names); drops ~40 other locale files.
+electronLanguages:
+  - en-US
+  - ar
+  - ca
+  - da
+  - de
+  - es
+  - fa
+  - fr
+  - id
+  - it
+  - ja
+  - ko
+  - nl
+  - pl
+  - pt-BR
+  - pt-PT
+  - ru
+  - sk
+  - sv
+  - tr
+  - uk
+  - vi
+  - zh-CN
+  - zh-TW
+fileAssociations:
+  - ext: pdf
+    name: PDF document
+    description: PDF document
+    mimeType: application/pdf
+    role: Editor
+    icon: icon
+win:
+  icon: build/icon.ico
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  # Unsigned unless CSC_LINK/CSC_KEY_PASSWORD are set (electron-builder picks them up itself).
+  signAndEditExecutable: true
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Inkleaf
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+  license: build/license.txt
+  artifactName: Inkleaf-Setup-${version}-${arch}.${ext}
+portable:
+  artifactName: Inkleaf-Portable-${version}-${arch}.${ext}
+mac:
+  icon: build/icon.icns
+  category: public.app-category.productivity
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+  # Unsigned/un-notarized builds (CI without secrets): run with CSC_IDENTITY_AUTO_DISCOVERY=false,
+  # or set `identity: null` here / pass -c.mac.identity=null. Notarization needs APPLE_ID,
+  # APPLE_APP_SPECIFIC_PASSWORD, APPLE_TEAM_ID plus a Developer ID cert in CSC_LINK.
+  notarize: false
+dmg:
+  artifactName: Inkleaf-${version}-${arch}.${ext}
+  title: Inkleaf ${version}

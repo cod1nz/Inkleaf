@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSD a PDF",
-    "subtitle": "Converteix fitxers Adobe Photoshop (PSD) a PDF. Admet diversos fitxers.",
+    "subtitle": "Converteix fitxers PSD a PDF. Admet diversos fitxers.",
     "acceptedFormats": "Fitxers PSD",
     "convertButton": "Converteix a PDF"
   },

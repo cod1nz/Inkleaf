@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSD til PDF",
-    "subtitle": "Konverter Adobe Photoshop (PSD) filer til PDF.",
+    "subtitle": "Konverter PSD filer til PDF.",
     "acceptedFormats": "PSD-filer",
     "convertButton": "Konverter til PDF"
   },

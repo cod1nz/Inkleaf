@@ -1,6 +1,7 @@
 (function () {
   var script = document.currentScript;
   if (!script) return;
+  if (typeof __DESKTOP__ !== 'undefined' && __DESKTOP__) return;
   var base = (script.getAttribute('data-base') || '/').replace(/\/?$/, '/');
   var languages = (script.getAttribute('data-languages') || '').split(',');
   var fallback = script.getAttribute('data-default-language') || 'en';

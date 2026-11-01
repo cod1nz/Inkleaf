@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSD إلى PDF",
-    "subtitle": "تحويل ملفات Adobe Photoshop (PSD) إلى تنسيق PDF. يدعم عدة ملفات.",
+    "subtitle": "تحويل ملفات PSD إلى تنسيق PDF. يدعم عدة ملفات.",
     "acceptedFormats": "ملفات PSD",
     "convertButton": "تحويل إلى PDF"
   },

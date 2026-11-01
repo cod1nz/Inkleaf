@@ -1,6 +1,17 @@
-const FONT_CDN =
-  import.meta.env.VITE_EMBEDPDF_FONTS_URL ||
-  'https://cdn.jsdelivr.net/npm/@embedpdf';
+// Replaced at build time by vite `define`; guarded so unit tests (which
+// use vitest.config.ts) still run in web mode.
+const IS_DESKTOP = typeof __DESKTOP__ !== 'undefined' && __DESKTOP__;
+// Desktop build: fonts are bundled (scripts/desktop-assets.mjs ->
+// public/fonts/editor/) and served same-origin; no remote base exists.
+const FONT_CDN = IS_DESKTOP
+  ? typeof location !== 'undefined' && location.href
+    ? new URL('/fonts/editor', location.href).href
+    : '/fonts/editor'
+  : import.meta.env.VITE_EMBEDPDF_FONTS_URL ||
+    'https://cdn.jsdelivr.net/npm/@embedpdf';
+
+// Desktop layout drops the "@1.0.0" suffix: fonts/editor/fonts-jp/fonts/*.otf
+const V = IS_DESKTOP ? '' : '@1.0.0';
 
 const CHARSET = {
   ANSI: 0,
@@ -21,13 +32,13 @@ const CHARSET = {
 } as const;
 
 const PACK = {
-  jp: 'fonts-jp@1.0.0/fonts/NotoSansJP-Regular.otf',
-  kr: 'fonts-kr@1.0.0/fonts/NotoSansKR-Regular.otf',
-  sc: 'fonts-sc@1.0.0/fonts/NotoSansHans-Regular.otf',
-  tc: 'fonts-tc@1.0.0/fonts/NotoSansHant-Regular.otf',
-  arabic: 'fonts-arabic@1.0.0/fonts/NotoNaskhArabic-Regular.ttf',
-  hebrew: 'fonts-hebrew@1.0.0/fonts/NotoSansHebrew-Regular.ttf',
-  latin: 'fonts-latin@1.0.0/fonts/NotoSans-Regular.ttf',
+  jp: `fonts-jp${V}/fonts/NotoSansJP-Regular.otf`,
+  kr: `fonts-kr${V}/fonts/NotoSansKR-Regular.otf`,
+  sc: `fonts-sc${V}/fonts/NotoSansHans-Regular.otf`,
+  tc: `fonts-tc${V}/fonts/NotoSansHant-Regular.otf`,
+  arabic: `fonts-arabic${V}/fonts/NotoNaskhArabic-Regular.ttf`,
+  hebrew: `fonts-hebrew${V}/fonts/NotoSansHebrew-Regular.ttf`,
+  latin: `fonts-latin${V}/fonts/NotoSans-Regular.ttf`,
 } as const;
 
 export const editorFontFallback = {

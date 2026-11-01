@@ -7,11 +7,7 @@ import { createIcons, icons } from 'lucide';
 import '@phosphor-icons/web/regular';
 import * as pdfjsLib from 'pdfjs-dist';
 import '../css/styles.css';
-import {
-  escapeHtml,
-  formatShortcutDisplay,
-  formatStars,
-} from './utils/helpers.js';
+import { escapeHtml, formatShortcutDisplay } from './utils/helpers.js';
 import {
   initI18n,
   applyTranslations,
@@ -967,33 +963,6 @@ const init = async () => {
 
   createIcons({ icons });
   console.log('Please share our tool and share the love!');
-
-  const githubStarsElements = [
-    document.getElementById('github-stars-desktop'),
-    document.getElementById('github-stars-mobile'),
-  ];
-
-  if (
-    githubStarsElements.some((el) => el) &&
-    !__SIMPLE_MODE__ &&
-    !__DISABLE_GITHUB_STARS__
-  ) {
-    fetch('https://api.github.com/repos/alam00000/bentopdf')
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.stargazers_count !== undefined) {
-          const formattedStars = formatStars(data.stargazers_count);
-          githubStarsElements.forEach((el) => {
-            if (el) el.textContent = formattedStars;
-          });
-        }
-      })
-      .catch(() => {
-        githubStarsElements.forEach((el) => {
-          if (el) el.textContent = '-';
-        });
-      });
-  }
 
   // Initialize Shortcuts System
   ShortcutsManager.init();

@@ -11,6 +11,8 @@ import type { InputFormat } from '@matbee/libreoffice-converter/browser';
 import { trText } from '../i18n/i18n.js';
 
 const LIBREOFFICE_LOCAL_PATH = import.meta.env.BASE_URL + 'libreoffice-wasm/';
+// Desktop: the engine is an optional add-on served from /addons/libreoffice/<version>/ (PLAN D9).
+const IS_DESKTOP = typeof __DESKTOP__ !== 'undefined' && __DESKTOP__;
 
 export interface LoadProgress {
   phase: 'loading' | 'initializing' | 'converting' | 'complete' | 'ready';
@@ -73,6 +75,16 @@ export class LibreOfficeConverter {
     }
 
     this.initializing = true;
+    try {
+      if (IS_DESKTOP) {
+        const { ensureLibreOffice } =
+          await import('../../desktop/addons/ensure-libreoffice');
+        this.basePath = await ensureLibreOffice();
+      }
+    } catch (e) {
+      this.initializing = false;
+      throw e;
+    }
     let progressCallback = onProgress; // Store original callback
 
     try {

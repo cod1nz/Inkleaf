@@ -1,0 +1,97 @@
+{
+  "generated_by": "scripts/collect-stats.mjs",
+  "tools": {
+    "categories_count": 7,
+    "unique_tool_pages": 118,
+    "entries_across_categories": 130,
+    "per_category": {
+      "Popular Tools": 13,
+      "Edit & Annotate": 21,
+      "Convert to PDF": 33,
+      "Convert from PDF": 16,
+      "Organize & Manage": 28,
+      "Optimize & Repair": 10,
+      "Secure PDF": 9
+    },
+    "per_category_unique": {
+      "Popular Tools": 13,
+      "Edit & Annotate": 21,
+      "Convert to PDF": 33,
+      "Convert from PDF": 16,
+      "Organize & Manage": 28,
+      "Optimize & Repair": 10,
+      "Secure PDF": 9
+    }
+  },
+  "dist": {
+    "html_pages_top_level": 125,
+    "total_files": 1479,
+    "size_bytes": 184685347,
+    "size_mb": 184.7,
+    "locale_json_folders": [
+      "ar",
+      "be",
+      "ca",
+      "da",
+      "de",
+      "en",
+      "es",
+      "fa",
+      "fr",
+      "id",
+      "it",
+      "ja",
+      "ko",
+      "nl",
+      "pl",
+      "pt",
+      "ru",
+      "sk",
+      "sv",
+      "tr",
+      "uk",
+      "vi",
+      "zh",
+      "zh-TW"
+    ],
+    "locale_json_folder_count": 24,
+    "translated_html_pages_by_locale": {},
+    "ui_languages": ["en"]
+  },
+  "tests": {
+    "e2e": {
+      "total": 137,
+      "pass": 131,
+      "fail": 2,
+      "known_limit": 4
+    },
+    "unit": null,
+    "note": "unit test counts are not recorded in a file; run `npx vitest run` / `node --test` to obtain them"
+  },
+  "installers": [
+    {
+      "file": "Inkleaf-Setup-2.8.11-x64.exe",
+      "size_bytes": 210234236,
+      "size_mb": 210.2
+    }
+  ],
+  "third_party_notices": {
+    "total_rows": 427,
+    "sections": [
+      {
+        "title": "Source code offer",
+        "rows": 0
+      },
+      {
+        "title": "Bundled components (WebAssembly and native)",
+        "rows": 14
+      },
+      {
+        "title": "JavaScript packages (413)",
+        "rows": 413
+      }
+    ],
+    "javascript_packages_listed": 413,
+    "javascript_packages_heading_count": 413
+  }
+}

@@ -1,5 +1,6 @@
 import { showLoader, hideLoader, showAlert } from '../ui.js';
-import { downloadFile } from '../utils/helpers.js';
+import { downloadFile, parsePageRanges } from '../utils/helpers.js';
+import { getDesk } from '../utils/desktop-io';
 import { state } from '../state.js';
 import { batchDecryptIfNeeded } from '../utils/password-prompt.js';
 import {
@@ -279,6 +280,70 @@ const resetState = async () => {
   await updateUI();
 };
 
+// CoherentPDF (js_of_ocaml) needs ~30x the input size in heap (measured: 212 MB -> ~6.8 GB), which
+// kills the renderer. pdf-lib keeps stream bytes as views (212 MB -> ~0.6 GB), so on desktop
+// large merges go through it instead.
+const LARGE_MERGE_BYTES = 48 * 1024 * 1024;
+
+async function mergeWithPdfLib(
+  files: MergeFile[],
+  jobs: MergeJob[]
+): Promise<Uint8Array> {
+  const { PDFDocument } = await import('pdf-lib');
+  const out = await PDFDocument.create();
+  const docs = new Map<string, Awaited<ReturnType<typeof PDFDocument.load>>>();
+  for (const job of jobs) {
+    let src = docs.get(job.fileName);
+    if (!src) {
+      const f = files.find((x) => x.name === job.fileName);
+      if (!f) continue;
+      src = await PDFDocument.load(new Uint8Array(f.data), {
+        ignoreEncryption: true,
+        updateMetadata: false,
+      });
+      docs.set(job.fileName, src);
+    }
+    const total = src.getPageCount();
+    let idx: number[];
+    if (job.rangeType === 'specific') {
+      idx = parsePageRanges(job.rangeString || '', total);
+    } else if (job.rangeType === 'single') {
+      idx = [job.pageIndex as number];
+    } else if (job.rangeType === 'range') {
+      idx = [];
+      for (
+        let i = (job.startPage as number) - 1;
+        i < (job.endPage as number);
+        i++
+      )
+        idx.push(i);
+    } else {
+      idx = src.getPageIndices();
+    }
+    idx = idx.filter((i) => i >= 0 && i < total);
+    if (!idx.length) continue;
+    const pages = await out.copyPages(src, idx);
+    pages.forEach((p) => out.addPage(p));
+  }
+  if (out.getPageCount() === 0)
+    throw new Error('No valid files or pages to merge.');
+  return out.save({ useObjectStreams: false });
+}
+
+function onMergeSuccess(bytes: BlobPart) {
+  const blob = new Blob([bytes], { type: 'application/pdf' });
+  downloadFile(blob, 'merged.pdf');
+  mergeState.mergeSuccess = true;
+  showAlert(
+    t('common.success'),
+    t('tools:mergePdf.alert.mergeSuccess'),
+    'success',
+    async () => {
+      await resetState();
+    }
+  );
+}
+
 export async function merge() {
   // Check if CPDF is configured
   if (!isCpdfAvailable()) {
@@ -385,6 +450,23 @@ export async function merge() {
       }
     }
 
+    if (
+      getDesk() &&
+      filesToMerge.reduce((n, f) => n + f.data.byteLength, 0) >=
+        LARGE_MERGE_BYTES
+    ) {
+      try {
+        const merged = await mergeWithPdfLib(filesToMerge, jobs);
+        hideLoader();
+        onMergeSuccess(merged as unknown as BlobPart);
+      } catch (err) {
+        console.error('Large merge error:', err);
+        hideLoader();
+        showAlert(t('common.error'), t('tools:mergePdf.alert.mergeFailed'));
+      }
+      return;
+    }
+
     const retainCheckbox = document.getElementById(
       'retain-page-labels'
     ) as HTMLInputElement | null;
@@ -410,17 +492,7 @@ export async function merge() {
     mergeWorker.onmessage = (e: MessageEvent<MergeResponse>) => {
       hideLoader();
       if (e.data.status === 'success') {
-        const blob = new Blob([e.data.pdfBytes], { type: 'application/pdf' });
-        downloadFile(blob, 'merged.pdf');
-        mergeState.mergeSuccess = true;
-        showAlert(
-          t('common.success'),
-          t('tools:mergePdf.alert.mergeSuccess'),
-          'success',
-          async () => {
-            await resetState();
-          }
-        );
+        onMergeSuccess(e.data.pdfBytes);
       } else {
         // The worker has no access to i18next: its message is technical and
         // English-only, so it goes to the console, not to the user.
@@ -446,7 +518,9 @@ export async function refreshMergeUI() {
   const processBtn = document.getElementById(
     'process-btn'
   ) as HTMLButtonElement;
-  if (processBtn) processBtn.disabled = false;
+  // Keep the primary action disabled until the file list is populated (a large file takes
+  // seconds to read; clicking early reported "No files or pages selected").
+  if (processBtn) processBtn.disabled = true;
 
   const wasInPageMode = mergeState.activeMode === 'page';
 
@@ -557,6 +631,7 @@ export async function refreshMergeUI() {
 
   createIcons({ icons });
   initializeFileListSortable();
+  if (processBtn) processBtn.disabled = false;
 
   const newFileModeBtn = fileModeBtn.cloneNode(true) as HTMLElement;
   const newPageModeBtn = pageModeBtn.cloneNode(true) as HTMLElement;

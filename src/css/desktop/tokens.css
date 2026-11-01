@@ -1,0 +1,183 @@
+/* Inkleaf desktop tokens. Light is the default, dark follows the system
+   (prefers-color-scheme) unless the user picked a theme (data-theme). */
+
+:root {
+  color-scheme: light dark;
+
+  --dk-font:
+    -apple-system, 'SF Pro Text', 'Segoe UI Variable Text', 'Segoe UI',
+    system-ui, 'Helvetica Neue', Arial, sans-serif;
+  --dk-font-mono:
+    ui-monospace, 'SF Mono', 'Cascadia Mono', 'Segoe UI Mono', Consolas,
+    monospace;
+
+  --dk-fs-xs: 12px;
+  --dk-fs-sm: 13px;
+  --dk-fs-md: 14px;
+  --dk-fs-lg: 16px;
+  --dk-fs-xl: 20px;
+  --dk-fs-2xl: 28px;
+
+  --dk-sp-1: 4px;
+  --dk-sp-2: 8px;
+  --dk-sp-3: 12px;
+  --dk-sp-4: 16px;
+  --dk-sp-5: 24px;
+  --dk-sp-6: 32px;
+
+  --dk-r-ctl: 8px;
+  --dk-r-panel: 12px;
+  --dk-r-dialog: 14px;
+
+  --dk-ctl-h: 28px;
+  --dk-btn-h: 36px;
+  --dk-titlebar-h: 44px;
+  --dk-sidebar-w: 232px;
+  --dk-rail-w: 56px;
+
+  --dk-ease: cubic-bezier(0.2, 0, 0, 1);
+  --dk-t-fast: 120ms;
+  --dk-t-base: 160ms;
+  --dk-t-slow: 200ms;
+
+  /* Light */
+  --dk-canvas: #f5f5f7;
+  --dk-sidebar: #ebebef;
+  --dk-panel: #ffffff;
+  --dk-popover: #ffffff;
+  --dk-text: #1d1d1f;
+  --dk-text-2: #5a5c64;
+  --dk-text-3: #62646d;
+  --dk-hairline: rgba(0, 0, 0, 0.09);
+  --dk-hairline-strong: rgba(0, 0, 0, 0.16);
+  --dk-hover: rgba(0, 0, 0, 0.055);
+  --dk-press: rgba(0, 0, 0, 0.09);
+  --dk-accent: #2563eb;
+  --dk-accent-hover: #1d54d1;
+  --dk-accent-text: #1d4ed8;
+  --dk-accent-wash: rgba(37, 99, 235, 0.11);
+  --dk-on-accent: #ffffff;
+  --dk-danger: #c93a3a;
+  --dk-success: #1f8a4c;
+  --dk-warning: #a86400;
+  --dk-scrim: rgba(20, 22, 28, 0.32);
+  --dk-shadow-pop:
+    0 0 0 1px rgba(0, 0, 0, 0.06), 0 12px 40px rgba(16, 18, 27, 0.18),
+    0 2px 6px rgba(16, 18, 27, 0.08);
+  --dk-shadow-card: 0 1px 2px rgba(16, 18, 27, 0.05);
+  --dk-focus: 0 0 0 2px var(--dk-canvas), 0 0 0 4px var(--dk-accent);
+  --dk-scroll-thumb: rgba(0, 0, 0, 0.22);
+  --dk-sheet-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --dk-g700: #e4e5ea;
+  --dk-g600: #d3d5db;
+  --dk-g500: #62646d;
+  --dk-g400: #5e6069;
+  --dk-g300: #464851;
+  --dk-g200: #2d2e34;
+  --dk-g100: #1f2024;
+  --dk-g50: #131417;
+  --dk-ind300: #4338ca;
+  --dk-ind400: #3730a3;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --dk-canvas: #17181b;
+    --dk-sidebar: #1d1e22;
+    --dk-panel: #212227;
+    --dk-popover: #2a2b31;
+    --dk-text: #ececee;
+    --dk-text-2: #a4a6ae;
+    --dk-text-3: #90929c;
+    --dk-hairline: rgba(255, 255, 255, 0.09);
+    --dk-hairline-strong: rgba(255, 255, 255, 0.17);
+    --dk-hover: rgba(255, 255, 255, 0.06);
+    --dk-press: rgba(255, 255, 255, 0.1);
+    --dk-accent: #2f6be8;
+    --dk-accent-hover: #2a62d8;
+    --dk-accent-text: #7eb0ff;
+    --dk-accent-wash: rgba(91, 147, 255, 0.17);
+    --dk-on-accent: #ffffff;
+    --dk-danger: #f07272;
+    --dk-success: #4cc27f;
+    --dk-warning: #e0a13a;
+    --dk-scrim: rgba(0, 0, 0, 0.5);
+    --dk-shadow-pop:
+      0 0 0 1px rgba(255, 255, 255, 0.08), 0 16px 48px rgba(0, 0, 0, 0.55),
+      0 2px 8px rgba(0, 0, 0, 0.35);
+    --dk-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --dk-scroll-thumb: rgba(255, 255, 255, 0.24);
+    --dk-sheet-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --dk-g700: #34353c;
+    --dk-g600: #44464e;
+    --dk-g500: #92949e;
+    --dk-g400: #a4a6ae;
+    --dk-g300: #c6c8ce;
+    --dk-g200: #dcdee2;
+    --dk-g100: #eceef0;
+    --dk-g50: #f5f6f7;
+    --dk-ind300: #a5b4fc;
+    --dk-ind400: #818cf8;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --dk-canvas: #17181b;
+  --dk-sidebar: #1d1e22;
+  --dk-panel: #212227;
+  --dk-popover: #2a2b31;
+  --dk-text: #ececee;
+  --dk-text-2: #a4a6ae;
+  --dk-text-3: #90929c;
+  --dk-hairline: rgba(255, 255, 255, 0.09);
+  --dk-hairline-strong: rgba(255, 255, 255, 0.17);
+  --dk-hover: rgba(255, 255, 255, 0.06);
+  --dk-press: rgba(255, 255, 255, 0.1);
+  --dk-accent: #2f6be8;
+  --dk-accent-hover: #2a62d8;
+  --dk-accent-text: #7eb0ff;
+  --dk-accent-wash: rgba(91, 147, 255, 0.17);
+  --dk-on-accent: #ffffff;
+  --dk-danger: #f07272;
+  --dk-success: #4cc27f;
+  --dk-warning: #e0a13a;
+  --dk-scrim: rgba(0, 0, 0, 0.5);
+  --dk-shadow-pop:
+    0 0 0 1px rgba(255, 255, 255, 0.08), 0 16px 48px rgba(0, 0, 0, 0.55),
+    0 2px 8px rgba(0, 0, 0, 0.35);
+  --dk-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --dk-scroll-thumb: rgba(255, 255, 255, 0.24);
+  --dk-sheet-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --dk-g700: #34353c;
+  --dk-g600: #44464e;
+  --dk-g500: #92949e;
+  --dk-g400: #a4a6ae;
+  --dk-g300: #c6c8ce;
+  --dk-g200: #dcdee2;
+  --dk-g100: #eceef0;
+  --dk-g50: #f5f6f7;
+  --dk-ind300: #a5b4fc;
+  --dk-ind400: #818cf8;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+/* No motion: durations to zero, no transforms. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dk-t-fast: 0ms;
+    --dk-t-base: 0ms;
+    --dk-t-slow: 0ms;
+  }
+  html[data-desktop] *,
+  html[data-desktop] *::before,
+  html[data-desktop] *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+    animation-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}

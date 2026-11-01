@@ -1,0 +1,4 @@
+.fixtures/
+out/
+shots/
+*.tmp

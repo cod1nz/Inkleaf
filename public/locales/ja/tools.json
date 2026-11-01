@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSDからPDF",
-    "subtitle": "Adobe Photoshop(PSD)ファイルをPDF形式に変換します。複数のファイルをサポートします。",
+    "subtitle": "PSDファイルをPDF形式に変換します。複数のファイルをサポートします。",
     "acceptedFormats": "PSDファイル",
     "convertButton": "PDFに変換"
   },

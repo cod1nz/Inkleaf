@@ -8,6 +8,9 @@
 
 import { trText } from './i18n/i18n';
 
+// Replaced at build time by vite `define`; guarded so unit tests (which
+// use vitest.config.ts) still run in web mode.
+const IS_DESKTOP = typeof __DESKTOP__ !== 'undefined' && __DESKTOP__;
 // Skip service worker registration in development mode
 const isDevelopment =
   window.location.hostname === 'localhost' ||
@@ -45,7 +48,9 @@ function sendTrustedHostsToSw(target: ServiceWorker | null | undefined) {
   target.postMessage({ type: 'SET_TRUSTED_CDN_HOSTS', hosts });
 }
 
-if (isDevelopment) {
+if (IS_DESKTOP) {
+  // Desktop build: no service worker (assets are served by the app:// handler).
+} else if (isDevelopment) {
   console.log('[Dev Mode] Service Worker registration skipped in development');
   console.log('Service Worker will be active in production builds');
 } else if ('serviceWorker' in navigator) {

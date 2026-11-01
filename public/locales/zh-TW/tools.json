@@ -981,7 +981,7 @@
   },
   "psdToPdf": {
     "name": "PSD 轉 PDF",
-    "subtitle": "將 Adobe Photoshop（PSD）檔案轉換為 PDF 格式。支援多個檔案。",
+    "subtitle": "將 PSD檔案轉換為 PDF 格式。支援多個檔案。",
     "acceptedFormats": "PSD 檔案",
     "convertButton": "轉換為 PDF"
   },
